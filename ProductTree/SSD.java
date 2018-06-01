@@ -60,7 +60,7 @@ class SSD extends Storage {
     		return null;
     	}
 	}
-	public String toJSONString() {
+	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
@@ -74,6 +74,11 @@ class SSD extends Storage {
 		keyArray.add(Str.memoryType);
 		keyArray.add(Str.tbw);
 		obj.put("Keys", keyArray);
-    	return getAttribute(obj.toJSONString());
+    	try {
+			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
+		} catch(Exception ex) {
+			System.out.println("Unexpected error occurred");
+			return null;
+		}
 	}
 }

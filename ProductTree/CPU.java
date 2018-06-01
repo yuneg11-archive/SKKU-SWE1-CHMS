@@ -39,7 +39,7 @@ class CPU extends Processor {
     	try {
 			JSONObject required = (JSONObject)(new JSONParser().parse(keys));
 			JSONArray keyArray = (JSONArray)required.get("Keys");
-    		JSONObject obj = new JSONObject();
+			JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
 					case "ProductType":		obj.put(Str.productType, "CPU");
@@ -50,7 +50,7 @@ class CPU extends Processor {
 					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);
 					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
 					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);
-					case "ImbeddedGraphic": if(this.imbeddedGraphic != null) obj.put("ImbeddedGraphic", this.imbeddedGraphic); //!!! CONVERT TO JSON NEEDED
+					case "ImbeddedGraphic": if(this.imbeddedGraphic != null) obj.put("ImbeddedGraphic", this.imbeddedGraphic.toJSONObject()); //!!! CONVERT TO JSON NEEDED
 					case "CPUSocket": 		if(this.cpuSocket != null) obj.put("CPUSocket", this.cpuSocket);
 				}
 			}
@@ -60,7 +60,7 @@ class CPU extends Processor {
     		return null;
     	}
 	}
-	public String toJSONString() {
+	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
@@ -74,6 +74,11 @@ class CPU extends Processor {
 		keyArray.add(Str.imbeddedGraphic);
 		keyArray.add(Str.cpuSocket);
 		obj.put("Keys", keyArray);
-    	return getAttribute(obj.toJSONString());
+    	try {
+			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
+		} catch(Exception ex) {
+			System.out.println("Unexpected error occurred");
+			return null;
+		}
 	}
 }

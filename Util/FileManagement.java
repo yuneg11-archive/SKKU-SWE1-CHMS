@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import JSON.JSONObject;
 import JSON.parser.JSONParser;
-import JSON.parser.ParseException;
 
 class FileManagement {
     private String databaseFileName;
@@ -51,21 +50,22 @@ class FileManagement {
     }
 
     // Save Database
-    boolean saveDatabase(ArrayList<Product> products) {
-        /*try {
-            //!!!! File Write
-            return true;
+    void saveDatabase(ArrayList<Product> products) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(databaseFileName));
+            for(Product product : products) {
+                bw.write(product.toJSONObject().toJSONString());
+                bw.newLine();
+            }
+            bw.close();
         } catch(IOException ex) {
-            return false;
-        }*/
-        return false;//temp
+            System.out.println("Unexpected error occurred");
+        }
     }
 
     Product StringtoProduct(String str) throws Exception {
     	JSONObject obj = (JSONObject)(new JSONParser().parse(str));
         String productType = (String)obj.get("ProductType");
-        obj.remove("ProductType");
-        
         Product product;
         switch(productType) {
         	case "Case": 			product = new Case(obj.toJSONString()); break;

@@ -53,7 +53,7 @@ class GraphicCard extends Graphic {
 					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
 					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);
 					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
-					case "Memory": 			if(this.memory != null) obj.put("Memory", this.memory); //!!! CONVERT TO JSON NEEDED
+					case "Memory": 			if(this.memory != null) obj.put("Memory", this.memory.toJSONObject()); //!!! CONVERT TO JSON NEEDED
 					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
 				}
 			}
@@ -63,7 +63,7 @@ class GraphicCard extends Graphic {
     		return null;
     	}
 	}
-	public String toJSONString() {
+	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
@@ -78,6 +78,11 @@ class GraphicCard extends Graphic {
 		keyArray.add(Str.memory);
 		keyArray.add(Str.slot);
 		obj.put("Keys", keyArray);
-    	return getAttribute(obj.toJSONString());
+    	try {
+			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
+		} catch(Exception ex) {
+			System.out.println("Unexpected error occurred");
+			return null;
+		}
 	}
 }

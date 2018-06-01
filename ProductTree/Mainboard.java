@@ -58,7 +58,7 @@ class Mainboard extends Product {
     		return null;
     	}
 	}
-	public String toJSONString() {
+	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
@@ -68,6 +68,11 @@ class Mainboard extends Product {
 		keyArray.add(Str.chipset);
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.cpuSocket);
-    	return getAttribute(obj.toJSONString());
+    	try {
+			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
+		} catch(Exception ex) {
+			System.out.println("Unexpected error occurred");
+			return null;
+		}
 	}
 }

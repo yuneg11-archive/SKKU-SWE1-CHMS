@@ -1,3 +1,5 @@
+import JSON.JSONObject;
+
 abstract class Product {
     // Variable
     protected String name;
@@ -8,5 +10,5 @@ abstract class Product {
     public abstract String getProductType();
     public abstract void setAttribute(String attributes);
     public abstract String getAttribute(String keys);
-    public abstract String toJSONString();
+    public abstract JSONObject toJSONObject();
 }

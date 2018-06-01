@@ -57,7 +57,7 @@ class PowerSupply extends Product {
     		return null;
     	}
 	}
-	public String toJSONString() {
+	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
@@ -68,6 +68,11 @@ class PowerSupply extends Product {
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.certification);
 		obj.put("Keys", keyArray);
-    	return getAttribute(obj.toJSONString());
+    	try {
+			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
+		} catch(Exception ex) {
+			System.out.println("Unexpected error occurred");
+			return null;
+		}
 	}
 }

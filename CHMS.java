@@ -6,7 +6,9 @@ public class CHMS {
         DataManagement dm = new DataManagement(fm.loadDatabase());
 
 
-        System.out.println(dm.getProducts().get(0).toJSONString());
+        String s = dm.getProducts().get(0).toJSONObject().toJSONString();
+        System.out.println(s);
+        System.out.println(dm.getProducts().get(1).toJSONObject().toJSONString());
         /* Do What You Want */
 
         System.out.println("Program over");
