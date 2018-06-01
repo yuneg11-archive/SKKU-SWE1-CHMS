@@ -8,7 +8,7 @@ public class ComputerHardwareManagementSystem {
 
         /* Do What You Want */
 
-        
+        System.out.println("Program over");
         fm.saveDatabase(dm.getProducts());
     }
 }
