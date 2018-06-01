@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -5,12 +7,14 @@ import JSON.parser.JSONParser;
 class GraphicCard extends Graphic {
 	// Variable
     private String slot;
-    private StringIntPair[] ports;
+    private ArrayList<StringLongPair> ports;
     
  // Constructor
     public GraphicCard() {
+		ports = new ArrayList<StringLongPair>();
     }
     public GraphicCard(String attributes) {
+		ports = new ArrayList<StringLongPair>();
     	setAttribute(attributes);
     }
     
@@ -31,8 +35,13 @@ class GraphicCard extends Graphic {
     		if(obj.containsKey("TDP"))			this.tdp 			= (Long)obj.get("TDP");
     		if(obj.containsKey("Chipset"))		this.chipset 		= (String)obj.get("Chipset");
     		if(obj.containsKey("Memory"))		this.memory 		= new Memory(((JSONObject)obj.get("Memory")).toJSONString());
-    		if(obj.containsKey("Slot"))			this.slot 			= (String)obj.get("Slot");
-    		/*!!!NEED PORTS*/
+			if(obj.containsKey("Slot"))			this.slot 			= (String)obj.get("Slot");
+			if(obj.containsKey(Str.port)) {
+				JSONArray values = (JSONArray)obj.get(Str.port);
+				for(Object value : values) {
+					ports.add(new StringLongPair((String)((JSONObject)value).get("Name"), (Long)((JSONObject)value).get("Number")));
+				}
+			}
     	} catch(Exception exc) {
     		System.out.println("Unexpected error occurred");
     	}
@@ -55,6 +64,16 @@ class GraphicCard extends Graphic {
 					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
 					case "Memory": 			if(this.memory != null) obj.put("Memory", this.memory.toJSONObject()); //!!! CONVERT TO JSON NEEDED
 					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
+					case "Port":			if(ports.size() != 0) {
+												JSONArray values = new JSONArray();
+												for(StringLongPair value : ports) {
+													JSONObject slp = new JSONObject();
+													slp.put("Name", value.name);
+													slp.put("Number", value.num);
+													values.add(slp);
+												}
+												obj.put("Port", values);
+											}
 				}
 			}
     		return obj.toJSONString();
@@ -77,6 +96,7 @@ class GraphicCard extends Graphic {
 		keyArray.add(Str.chipset);
 		keyArray.add(Str.memory);
 		keyArray.add(Str.slot);
+		keyArray.add(Str.port);
 		obj.put("Keys", keyArray);
     	try {
 			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));

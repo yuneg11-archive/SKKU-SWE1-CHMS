@@ -9,6 +9,7 @@ public class CHMS {
         String s = dm.getProducts().get(0).toJSONObject().toJSONString();
         System.out.println(s);
         System.out.println(dm.getProducts().get(1).toJSONObject().toJSONString());
+        System.out.println(dm.getProducts().get(2).toJSONObject().toJSONString());
         /* Do What You Want */
 
         System.out.println("Program over");

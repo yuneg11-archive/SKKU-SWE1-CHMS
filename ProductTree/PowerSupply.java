@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -7,12 +9,14 @@ class PowerSupply extends Product {
     private Long ratedOutput; // Unit: W
     private String formFactor;
     private String certification;
-    private StringIntPair[] connectors;
+    private ArrayList<StringLongPair> connectors;
     
     // Constructor
     public PowerSupply() {
+		connectors = new ArrayList<>();
     }
     public PowerSupply(String attributes) {
+		connectors = new ArrayList<>();
     	setAttribute(attributes);
     }
     
@@ -30,7 +34,12 @@ class PowerSupply extends Product {
     		if(obj.containsKey("RatedOutput"))	this.ratedOutput 	= (Long)obj.get("RatedOutput");
     		if(obj.containsKey("FormFactor"))	this.formFactor 	= (String)obj.get("FormFactor");
     		if(obj.containsKey("Certification"))this.certification 	= (String)obj.get("Certification");
-    		/*!!! CONNECTORS NEEDED*/
+    		if(obj.containsKey(Str.connector)) {
+				JSONArray values = (JSONArray)obj.get(Str.connector);
+				for(Object value : values) {
+					connectors.add(new StringLongPair((String)((JSONObject)value).get("Name"), (Long)((JSONObject)value).get("Number")));
+				}
+			}
     	} catch(Exception exc) {
     		System.out.println("Unexpected error occurred");
     	}
@@ -49,6 +58,16 @@ class PowerSupply extends Product {
 					case "RatedOutput": 	if(this.ratedOutput != null) obj.put("RatedOutput", this.ratedOutput);
 					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
 					case "Certification": 	if(this.certification != null) obj.put("Certification", this.certification);
+					case "Port":			if(connectors.size() != 0) {
+												JSONArray values = new JSONArray();
+												for(StringLongPair value : connectors) {
+													JSONObject slp = new JSONObject();
+													slp.put("Name", value.name);
+													slp.put("Number", value.num);
+													values.add(slp);
+												}
+												obj.put("Connector", values);
+											}
 				}
 			}
     		return obj.toJSONString();
@@ -67,6 +86,7 @@ class PowerSupply extends Product {
 		keyArray.add(Str.ratedOutput);
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.certification);
+		keyArray.add(Str.connector);
 		obj.put("Keys", keyArray);
     	try {
 			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));

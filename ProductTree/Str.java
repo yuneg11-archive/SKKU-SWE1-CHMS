@@ -26,4 +26,6 @@ public class Str {
     public static String certification = "Certification";
     public static String memoryType = "MemoryType";
     public static String tbw = "TBW";
+    public static String port = "Port";
+    public static String connector = "Connector";
 }

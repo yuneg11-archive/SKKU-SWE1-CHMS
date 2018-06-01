@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -7,13 +9,17 @@ class Mainboard extends Product {
     private String chipset;
     private String formFactor;
     private String cpuSocket;
-    private StringIntPair[] slots;
-    private StringIntPair[] ports;
+    private ArrayList<StringLongPair> slots;
+    private ArrayList<StringLongPair> ports;
 
     // Constructor
     public Mainboard() {
+		slots = new ArrayList<StringLongPair>();
+		ports = new ArrayList<StringLongPair>();
     }
     public Mainboard(String attributes) {
+		slots = new ArrayList<StringLongPair>();
+		ports = new ArrayList<StringLongPair>();
     	setAttribute(attributes);
     }
     
@@ -31,7 +37,18 @@ class Mainboard extends Product {
     		if(obj.containsKey("Chipset"))		this.chipset 		= (String)obj.get("Chipset");
     		if(obj.containsKey("FormFactor"))	this.formFactor 	= (String)obj.get("FormFactor");
     		if(obj.containsKey("Socket"))		this.cpuSocket 		= (String)obj.get("Socket");
-    		/*!!!NEED SLOTS AND PORTS*/
+    		if(obj.containsKey(Str.slot)) {
+				JSONArray values = (JSONArray)obj.get(Str.slot);
+				for(Object value : values) {
+					slots.add(new StringLongPair((String)((JSONObject)value).get("Name"), (Long)((JSONObject)value).get("Number")));
+				}
+			}
+			if(obj.containsKey(Str.port)) {
+				JSONArray values = (JSONArray)obj.get(Str.port);
+				for(Object value : values) {
+					ports.add(new StringLongPair((String)((JSONObject)value).get("Name"), (Long)((JSONObject)value).get("Number")));
+				}
+			}
     	} catch(Exception exc) {
     		System.out.println("Unexpected error occurred");
     	}
@@ -50,6 +67,26 @@ class Mainboard extends Product {
 					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
 					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
 					case "Socket": 			if(this.cpuSocket != null) obj.put("Socket", this.cpuSocket);
+					case "Slot":			if(slots.size() != 0) {
+												JSONArray values = new JSONArray();
+												for(StringLongPair value : slots) {
+													JSONObject slp = new JSONObject();
+													slp.put("Name", value.name);
+													slp.put("Number", value.num);
+													values.add(slp);
+												}
+												obj.put("Slot", values);
+											}
+					case "Port":			if(ports.size() != 0) {
+												JSONArray values = new JSONArray();
+												for(StringLongPair value : ports) {
+													JSONObject slp = new JSONObject();
+													slp.put("Name", value.name);
+													slp.put("Number", value.num);
+													values.add(slp);
+												}
+												obj.put("Port", values);
+											}
 				}
 			}
     		return obj.toJSONString();
@@ -68,6 +105,9 @@ class Mainboard extends Product {
 		keyArray.add(Str.chipset);
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.cpuSocket);
+		keyArray.add(Str.slot);
+		keyArray.add(Str.port);
+		obj.put("Keys", keyArray);
     	try {
 			return (JSONObject)(new JSONParser().parse(getAttribute(obj.toJSONString())));
 		} catch(Exception ex) {
