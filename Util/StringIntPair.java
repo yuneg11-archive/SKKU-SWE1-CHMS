@@ -1,4 +1,4 @@
-class StringIntPair {
-    String name;
-    int num;
+public class StringIntPair {
+    public String name;
+    public int num;
 }

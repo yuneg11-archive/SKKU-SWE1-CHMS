@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 abstract class Product {
     // Variable
     protected String name;
@@ -5,22 +7,10 @@ abstract class Product {
     protected String manufacturer;
 
     // Setter & Getter
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
-    }
-    
-    public void setPrice(int price) {
-        this.price = price;
-    }
-    public int getPrice() {
-        return price;
-    }
+    public abstract String getProductType();
 
-    public abstract getProductType();
-
-    public abstract inputAttribute();
-    public abstract getAttribute();
+    public abstract void setAttributes(ArrayList<StringStringPair> attributes);
+    public abstract void setAttribute(StringStringPair attribute);
+    public abstract ArrayList<StringStringPair> getAttributes();
+    public abstract String getAttribute(String name);
 }

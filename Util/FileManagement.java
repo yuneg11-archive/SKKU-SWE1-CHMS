@@ -2,6 +2,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 class FileManagement {
     private String databaseFileName;
 
@@ -12,12 +16,14 @@ class FileManagement {
     // Load Database 
     ArrayList<Product> loadDatabase() {
         ArrayList<Product> products;
+        JSONParser parser = new JSONParser();
         try {
             BufferedReader br = new BufferedReader(new FileReader(databaseFileName));
             String line = br.readLine();
             while(line != null) {
-                products.add(parseInput(line));
-                System.out.println(line);
+                JSONObject obj = (JSONObject)parser.parse(line);
+                /*Debug*/System.out.println(line);
+                products.add(JSONtoProduct(obj));
                 line = br.readLine();
             }
             br.close();
@@ -38,8 +44,7 @@ class FileManagement {
         }
     }
 
-    private Product parseInput(String line) {
-        //!!!! JSON Parsing
-        return new Product(); //Temp
+    Product JSONtoProduct(JSONObject json) {
+
     }
 }
