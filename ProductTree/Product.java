@@ -1,26 +1,15 @@
+import JSON.JSONObject;
+
 abstract class Product {
     // Variable
     protected String name;
-    protected int price;
+    protected Long price;
     protected String manufacturer;
+    protected Long quantity;
 
     // Setter & Getter
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
-    }
-    
-    public void setPrice(int price) {
-        this.price = price;
-    }
-    public int getPrice() {
-        return price;
-    }
-
-    public abstract getProductType();
-
-    public abstract inputAttribute();
-    public abstract getAttribute();
+    public abstract String getProductType();
+    public abstract void setAttribute(String attributes);
+    public abstract String getAttribute(String keys);
+    public abstract JSONObject toJSONObject();
 }
