@@ -9,8 +9,10 @@ class ExpansionCard extends Product {
     
     // Constructor
     public ExpansionCard() {
+		this.quantity = 1L;
     }
     public ExpansionCard(String attributes) {
+		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -24,7 +26,8 @@ class ExpansionCard extends Product {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
-    		if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("Slot"))			this.slot 			= (String)obj.get("Slot");
     		if(obj.containsKey("Function"))		this.function 		= (String)obj.get("Function");
     	} catch(Exception exc) {
@@ -42,6 +45,7 @@ class ExpansionCard extends Product {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 		obj.put("Quantity", this.quantity);
 					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
 					case "Function": 		if(this.function != null) obj.put("Function", this.function);
 				}
@@ -59,6 +63,7 @@ class ExpansionCard extends Product {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.slot);
 		keyArray.add(Str.function);
 		obj.put("Keys", keyArray);

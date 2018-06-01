@@ -13,9 +13,11 @@ class PowerSupply extends Product {
     
     // Constructor
     public PowerSupply() {
+		this.quantity = 1L;
 		connectors = new ArrayList<>();
     }
     public PowerSupply(String attributes) {
+		this.quantity = 1L;
 		connectors = new ArrayList<>();
     	setAttribute(attributes);
     }
@@ -30,7 +32,8 @@ class PowerSupply extends Product {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
-    		if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("RatedOutput"))	this.ratedOutput 	= (Long)obj.get("RatedOutput");
     		if(obj.containsKey("FormFactor"))	this.formFactor 	= (String)obj.get("FormFactor");
     		if(obj.containsKey("Certification"))this.certification 	= (String)obj.get("Certification");
@@ -55,6 +58,7 @@ class PowerSupply extends Product {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 		obj.put("Quantity", this.quantity);
 					case "RatedOutput": 	if(this.ratedOutput != null) obj.put("RatedOutput", this.ratedOutput);
 					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
 					case "Certification": 	if(this.certification != null) obj.put("Certification", this.certification);
@@ -83,6 +87,7 @@ class PowerSupply extends Product {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.ratedOutput);
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.certification);

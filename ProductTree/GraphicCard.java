@@ -11,9 +11,11 @@ class GraphicCard extends Graphic {
     
  // Constructor
     public GraphicCard() {
+		this.quantity = 1L;
 		ports = new ArrayList<StringLongPair>();
     }
     public GraphicCard(String attributes) {
+		this.quantity = 1L;
 		ports = new ArrayList<StringLongPair>();
     	setAttribute(attributes);
     }
@@ -28,7 +30,8 @@ class GraphicCard extends Graphic {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
-    		if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("CoreNumber"))	this.coreNumber 	= (Long)obj.get("CoreNumber");
     		if(obj.containsKey("ClockRate"))	this.clockRate 		= (Double)obj.get("ClockRate");
     		if(obj.containsKey("Fabrication"))	this.fabrication 	= (Long)obj.get("Fabrication");
@@ -57,6 +60,7 @@ class GraphicCard extends Graphic {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 		obj.put("Quantity", this.quantity);
 					case "CoreNumber": 		if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);
 					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);
 					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
@@ -89,6 +93,7 @@ class GraphicCard extends Graphic {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.coreNumber);
 		keyArray.add(Str.clockRate);
 		keyArray.add(Str.fabrication);

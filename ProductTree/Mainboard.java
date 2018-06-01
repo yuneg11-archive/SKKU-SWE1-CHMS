@@ -14,10 +14,12 @@ class Mainboard extends Product {
 
     // Constructor
     public Mainboard() {
+		this.quantity = 1L;
 		slots = new ArrayList<StringLongPair>();
 		ports = new ArrayList<StringLongPair>();
     }
     public Mainboard(String attributes) {
+		this.quantity = 1L;
 		slots = new ArrayList<StringLongPair>();
 		ports = new ArrayList<StringLongPair>();
     	setAttribute(attributes);
@@ -33,7 +35,8 @@ class Mainboard extends Product {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
-    		if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("Chipset"))		this.chipset 		= (String)obj.get("Chipset");
     		if(obj.containsKey("FormFactor"))	this.formFactor 	= (String)obj.get("FormFactor");
     		if(obj.containsKey("Socket"))		this.cpuSocket 		= (String)obj.get("Socket");
@@ -64,6 +67,7 @@ class Mainboard extends Product {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 		obj.put("Quantity", this.quantity);
 					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
 					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
 					case "Socket": 			if(this.cpuSocket != null) obj.put("Socket", this.cpuSocket);
@@ -102,6 +106,7 @@ class Mainboard extends Product {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.chipset);
 		keyArray.add(Str.formFactor);
 		keyArray.add(Str.cpuSocket);

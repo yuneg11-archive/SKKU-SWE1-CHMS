@@ -9,8 +9,10 @@ class SSD extends Storage {
     
  // Constructor
     public SSD() {
+		this.quantity = 1L;
     }
     public SSD(String attributes) {
+		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -24,7 +26,8 @@ class SSD extends Storage {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
-    		if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("Capacity"))		this.capacity		= (Long)obj.get("Capacity");
     		if(obj.containsKey("ReadSpeed"))	this.readSpeed 		= (Long)obj.get("ReadSpeed");
     		if(obj.containsKey("WriteSpeed"))	this.writeSpeed 	= (Long)obj.get("WriteSpeed");
@@ -46,6 +49,7 @@ class SSD extends Storage {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 		obj.put("Quantity", this.quantity);
 					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);
 					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);
 					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);
@@ -67,6 +71,7 @@ class SSD extends Storage {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.capacity);
 		keyArray.add(Str.readSpeed);
 		keyArray.add(Str.writeSpeed);

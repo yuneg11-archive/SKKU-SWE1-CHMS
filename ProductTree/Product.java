@@ -5,6 +5,7 @@ abstract class Product {
     protected String name;
     protected Long price;
     protected String manufacturer;
+    protected Long quantity;
 
     // Setter & Getter
     public abstract String getProductType();

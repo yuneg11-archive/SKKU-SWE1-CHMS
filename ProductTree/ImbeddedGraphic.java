@@ -8,8 +8,10 @@ class ImbeddedGraphic extends Graphic {
     
     // Constructor
     public ImbeddedGraphic() {
+		this.quantity = 1L;
     }
     public ImbeddedGraphic(String attributes) {
+		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -22,7 +24,8 @@ class ImbeddedGraphic extends Graphic {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey("Name")) 					this.name 				= (String)obj.get("Name");
-    		if(obj.containsKey("Manufacturer")) 			this.manufacturer 		= (String)obj.get("Manufacturer");
+			if(obj.containsKey("Manufacturer")) 			this.manufacturer 		= (String)obj.get("Manufacturer");
+			if(obj.containsKey(Str.quantity))				this.quantity 			= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("CoreNumber"))				this.coreNumber 		= (Long)obj.get("CoreNumber");
     		if(obj.containsKey("Fabrication"))				this.fabrication 		= (Long)obj.get("Fabrication");
     		if(obj.containsKey("TDP"))						this.tdp 				= (Long)obj.get("TDP");
@@ -41,6 +44,7 @@ class ImbeddedGraphic extends Graphic {
 					case "ProductType":				obj.put(Str.productType, "ImbeddedGraphic");
 					case "Name":					if(this.name != null) obj.put("Name", this.name);
 					case "Manufacturer": 			if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
+					case "Quantity": 				obj.put("Quantity", this.quantity);
 					case "CoreNumber": 				if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);
 					case "Fabrication": 			if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
 					case "TDP": 					if(this.tdp != null) obj.put("TDP", this.tdp);
@@ -59,6 +63,7 @@ class ImbeddedGraphic extends Graphic {
 		keyArray.add(Str.productType);
 		keyArray.add(Str.name);
 		keyArray.add(Str.manufacturer);
+		keyArray.add(Str.quantity);
 		keyArray.add(Str.clockRate);
 		keyArray.add(Str.fabrication);
 		keyArray.add(Str.tdp);
