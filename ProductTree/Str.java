@@ -1,0 +1,29 @@
+public class Str {
+    public static String productType = "ProductType";
+    public static String name = "Name";
+    public static String price = "Price";
+    public static String manufacturer = "Manufacturer";
+    public static String formFactor = "FormFactor";
+    public static String coreNumber = "CoreNumber";
+    public static String clockRate = "ClockRate";
+    public static String fabrication = "Fabrication";
+    public static String tdp = "TDP";
+    public static String imbeddedGraphic = "ImbeddedGraphic";
+    public static String cpuSocket = "CPUSocket";
+    public static String slot = "Slot";
+    public static String function = "Function";
+    public static String chipset = "Chipset";
+    public static String memory = "Memory";
+    public static String capacity = "Capacity";
+    public static String readSpeed = "ReadSpeed";
+    public static String writeSpeed = "WriteSpeed";
+    public static String diskSize = "DiskSize";
+    public static String rpm = "RPM";
+    public static String systemMemoryAlloc = "SystemMemoryAllocation";
+    public static String errorCheck = "ErrorCheck";
+    public static String standard = "Standard";
+    public static String ratedOutput = "RatedOutput";
+    public static String certification = "Certification";
+    public static String memoryType = "MemoryType";
+    public static String tbw = "TBW";
+}
