@@ -1,4 +1,7 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -23,6 +26,38 @@ class Memory extends Product {
     	return "Memory";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+
+		System.out.print(" Capacity (GB): ");
+		this.capacity = s.nextLong();
+		
+		System.out.print(" Clock Rate (MHz): ");
+		this.clockRate = s.nextLong();
+		s.nextLine();
+		
+		while(true) {
+			System.out.print(" Error Check (Y/N): ");
+			if(s.nextLine().compareTo("Y")==0) {
+				this.errorCheck = true;
+				break;
+			}
+			else if(s.nextLine().compareTo("N")==0) {
+				this.errorCheck = false;
+				break;
+			}
+			else System.out.println("Invalid Input");
+		}
+		
+		System.out.print(" Standard (\"DDR#\"): ");
+		this.standard = s.nextLine();
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -45,15 +80,15 @@ class Memory extends Product {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "Memory");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);
-					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);
-					case "ErrorCheck": 		if(this.errorCheck != null) obj.put("ErrorCheck", this.errorCheck);
-					case "Standard": 		if(this.standard != null) obj.put("Standard", this.standard);
+					case "ProductType":		obj.put(Str.productType, "Memory");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);break;
+					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);break;
+					case "ErrorCheck": 		if(this.errorCheck != null) obj.put("ErrorCheck", this.errorCheck);break;
+					case "Standard": 		if(this.standard != null) obj.put("Standard", this.standard);break;
 				}
 			}
     		return obj.toJSONString();

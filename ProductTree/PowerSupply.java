@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import JSON.JSONObject;
 import JSON.JSONArray;
@@ -27,6 +28,40 @@ class PowerSupply extends Product {
     	return "PowerSupply";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	long types;
+    	String name;
+    	long num;
+		
+    	System.out.print(" Rated output (W): ");
+    	this.ratedOutput = s.nextLong();
+    	s.nextLine();
+    	
+    	System.out.print(" Form Factor: ");
+    	this.formFactor = s.nextLine();
+    	
+    	System.out.print(" Certification: ");
+    	this.certification = s.nextLine();
+		
+		System.out.print(" How many types of connectors?: ");
+		types = s.nextLong();
+		s.nextLine();
+		for(int i=0; i<types; i++) {
+			System.out.printf(" Name of connector type %d: ",i+1);
+			name = s.nextLine();
+			System.out.printf(" Number of connector type %d: ",i+1);
+			num = s.nextLong();
+			s.nextLine();
+			this.connectors.add(new StringLongPair(name, num));
+		}		
+
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -54,14 +89,14 @@ class PowerSupply extends Product {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "PowerSupply");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "RatedOutput": 	if(this.ratedOutput != null) obj.put("RatedOutput", this.ratedOutput);
-					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
-					case "Certification": 	if(this.certification != null) obj.put("Certification", this.certification);
+					case "ProductType":		obj.put(Str.productType, "PowerSupply");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "RatedOutput": 	if(this.ratedOutput != null) obj.put("RatedOutput", this.ratedOutput);break;
+					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);break;
+					case "Certification": 	if(this.certification != null) obj.put("Certification", this.certification);break;
 					case "Port":			if(connectors.size() != 0) {
 												JSONArray values = new JSONArray();
 												for(StringLongPair value : connectors) {
@@ -71,7 +106,7 @@ class PowerSupply extends Product {
 													values.add(slp);
 												}
 												obj.put("Connector", values);
-											}
+											}break;
 				}
 			}
     		return obj.toJSONString();

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import JSON.JSONObject;
 import JSON.JSONArray;
@@ -30,6 +31,51 @@ class Mainboard extends Product {
     	return "Mainboard";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	long types;
+    	String name;
+    	long num;
+    	
+    	System.out.print(" Chipset: ");
+		this.chipset = s.nextLine();
+		
+		System.out.print(" Form Factor: ");
+		this.formFactor = s.nextLine();
+		
+		System.out.print(" CPU Socket: ");
+		this.cpuSocket = s.nextLine();
+		
+		System.out.print(" How many types of slots?: ");
+		types = s.nextLong();
+		s.nextLine();
+		for(int i=0; i<types; i++) {
+			System.out.printf(" Name of slot type %d: ",i+1);
+			name = s.nextLine();
+			System.out.printf(" Number of slot type %d: ",i+1);
+			num = s.nextLong();
+			s.nextLine();
+			this.slots.add(new StringLongPair(name, num));
+		}
+		
+		System.out.print(" How many types of ports?: ");
+		types = s.nextLong();
+		s.nextLine();
+		for(int i=0; i<types; i++) {
+			System.out.printf(" Name of port type %d: ",i+1);
+			name = s.nextLine();
+			System.out.printf(" Number of port type %d: ",i+1);
+			num = s.nextLong();
+			s.nextLine();
+			this.ports.add(new StringLongPair(name, num));
+		}		
+
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -63,14 +109,14 @@ class Mainboard extends Product {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "Mainboard");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
-					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);
-					case "Socket": 			if(this.cpuSocket != null) obj.put("Socket", this.cpuSocket);
+					case "ProductType":		obj.put(Str.productType, "Mainboard");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);break;
+					case "FormFactor": 		if(this.formFactor != null) obj.put("FormFactor", this.formFactor);break;
+					case "Socket": 			if(this.cpuSocket != null) obj.put("Socket", this.cpuSocket);break;
 					case "Slot":			if(slots.size() != 0) {
 												JSONArray values = new JSONArray();
 												for(StringLongPair value : slots) {
@@ -80,7 +126,7 @@ class Mainboard extends Product {
 													values.add(slp);
 												}
 												obj.put("Slot", values);
-											}
+											}break;
 					case "Port":			if(ports.size() != 0) {
 												JSONArray values = new JSONArray();
 												for(StringLongPair value : ports) {
@@ -90,7 +136,7 @@ class Mainboard extends Product {
 													values.add(slp);
 												}
 												obj.put("Port", values);
-											}
+											}break;
 				}
 			}
     		return obj.toJSONString();

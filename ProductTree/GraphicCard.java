@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import JSON.JSONObject;
 import JSON.JSONArray;
@@ -25,6 +26,33 @@ class GraphicCard extends Graphic {
     	return "GraphicCard";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	long types;
+    	String name;
+    	long num;
+		
+    	System.out.print(" Slot: ");
+    	this.slot = s.nextLine();
+		
+		System.out.print(" How many types of ports?: ");
+		types = s.nextLong();
+		s.nextLine();
+		for(int i=0; i<types; i++) {
+			System.out.printf(" Name of port type %d: ",i+1);
+			name = s.nextLine();
+			System.out.printf(" Number of port type %d: ",i+1);
+			num = s.nextLong();
+			s.nextLine();
+			this.ports.add(new StringLongPair(name, num));
+		}		
+
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -56,18 +84,18 @@ class GraphicCard extends Graphic {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "GraphicCard");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "CoreNumber": 		if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);
-					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);
-					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
-					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);
-					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);
-					case "Memory": 			if(this.memory != null) obj.put("Memory", this.memory.toJSONObject()); //!!! CONVERT TO JSON NEEDED
-					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
+					case "ProductType":		obj.put(Str.productType, "GraphicCard");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "CoreNumber": 		if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);break;
+					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);break;
+					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);break;
+					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);break;
+					case "Chipset": 		if(this.chipset != null) obj.put("Chipset", this.chipset);break;
+					case "Memory": 			if(this.memory != null) obj.put("Memory", this.memory.toJSONObject());break; //!!! CONVERT TO JSON NEEDED
+					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);break;
 					case "Port":			if(ports.size() != 0) {
 												JSONArray values = new JSONArray();
 												for(StringLongPair value : ports) {
@@ -77,7 +105,7 @@ class GraphicCard extends Graphic {
 													values.add(slp);
 												}
 												obj.put("Port", values);
-											}
+											}break;
 				}
 			}
     		return obj.toJSONString();

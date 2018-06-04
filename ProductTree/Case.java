@@ -1,4 +1,7 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -20,6 +23,18 @@ class Case extends Product {
     	return "Case";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+
+		System.out.print(" Form Factor: ");
+		this.formFactor = s.nextLine();
+		
+		
+    }
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -39,12 +54,12 @@ class Case extends Product {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "Case");
-					case "Name":			if(this.name != null) obj.put(Str.name, this.name);
-					case "Price": 			if(this.price != null) obj.put(Str.price, this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put(Str.manufacturer, this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "FormFactor": 		if(this.formFactor != null) obj.put(Str.formFactor, this.formFactor);
+					case "ProductType":		obj.put(Str.productType, "Case");break;
+					case "Name":			if(this.name != null) obj.put(Str.name, this.name);break;
+					case "Price": 			if(this.price != null) obj.put(Str.price, this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put(Str.manufacturer, this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "FormFactor": 		if(this.formFactor != null) obj.put(Str.formFactor, this.formFactor);break;
 				}
 			}
     		return obj.toJSONString();

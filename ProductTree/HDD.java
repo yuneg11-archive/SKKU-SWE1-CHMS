@@ -1,4 +1,7 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -21,6 +24,22 @@ class HDD extends Storage {
     	return "HDD";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	
+    	System.out.print(" Disk Size (inch): ");
+		this.diskSize = s.nextLine();
+		
+		System.out.print(" RPM: ");
+		this.rpm = s.nextLong();
+		s.nextLine();
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -45,17 +64,17 @@ class HDD extends Storage {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "HDD");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);
-					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);
-					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);
-					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
-					case "DiskSize": 		if(this.diskSize != null) obj.put("DiskSize", this.diskSize);
-					case "RPM": 			if(this.rpm != null) obj.put("RPM", this.rpm);
+					case "ProductType":		obj.put(Str.productType, "HDD");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);break;
+					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);break;
+					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);break;
+					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);break;
+					case "DiskSize": 		if(this.diskSize != null) obj.put("DiskSize", this.diskSize);break;
+					case "RPM": 			if(this.rpm != null) obj.put("RPM", this.rpm);break;
 				}
 			}
     		return obj.toJSONString();

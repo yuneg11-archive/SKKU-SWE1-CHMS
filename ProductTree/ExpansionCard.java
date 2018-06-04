@@ -1,6 +1,10 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
+
 
 class ExpansionCard extends Product {
 	// Variable
@@ -21,6 +25,21 @@ class ExpansionCard extends Product {
     	return "ExpansionCard";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	
+    	System.out.print(" Slot: ");
+		this.slot = s.nextLine();
+		
+		System.out.print(" Function: ");
+		this.function = s.nextLine();
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -41,13 +60,13 @@ class ExpansionCard extends Product {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "ExpansionCard");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
-					case "Function": 		if(this.function != null) obj.put("Function", this.function);
+					case "ProductType":		obj.put(Str.productType, "ExpansionCard");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);break;
+					case "Function": 		if(this.function != null) obj.put("Function", this.function);break;
 				}
 			}
     		return obj.toJSONString();

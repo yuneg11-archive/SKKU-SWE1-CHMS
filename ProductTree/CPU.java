@@ -2,6 +2,8 @@ import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
+import java.util.Scanner;
+
 class CPU extends Processor {
 	// Variable
     private ImbeddedGraphic imbeddedGraphic;
@@ -20,7 +22,35 @@ class CPU extends Processor {
     public String getProductType() {
     	return "CPU";
     }
-
+    
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);
+    	
+    	System.out.print(" CPU Socket: ");		
+		this.cpuSocket = s.nextLine();
+		
+		while(true) {
+			System.out.print(" Has Imbedded Graphic? (Y/N): ");
+			
+			if(s.nextLine().compareTo("Y")==0) {
+				System.out.println("===============Imbedded Graphic===============");
+				ImbeddedGraphic imb = new ImbeddedGraphic();
+				imb.insert();
+				this.imbeddedGraphic = imb;
+				break;
+			}
+			else if(s.nextLine().compareTo("N")==0) break;
+			else System.out.println("Invalid Input");
+		}
+		
+		
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -45,16 +75,16 @@ class CPU extends Processor {
 			JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "CPU");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "CoreNumber": 		if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);
-					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);
-					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
-					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);
-					case "ImbeddedGraphic": if(this.imbeddedGraphic != null) obj.put("ImbeddedGraphic", this.imbeddedGraphic.toJSONObject()); //!!! CONVERT TO JSON NEEDED
+					case "ProductType":		obj.put(Str.productType, "CPU");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "CoreNumber": 		if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);break;
+					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);break;
+					case "Fabrication": 	if(this.fabrication != null) obj.put("Fabrication", this.fabrication);break;
+					case "TDP": 			if(this.tdp != null) obj.put("TDP", this.tdp);break;
+					case "ImbeddedGraphic": if(this.imbeddedGraphic != null) obj.put("ImbeddedGraphic", this.imbeddedGraphic.toJSONObject());break; //!!! CONVERT TO JSON NEEDED
 					case "CPUSocket": 		if(this.cpuSocket != null) obj.put("CPUSocket", this.cpuSocket);
 				}
 			}
@@ -85,5 +115,7 @@ class CPU extends Processor {
 			System.out.println("Unexpected error occurred");
 			return null;
 		}
+    	
 	}
+	
 }

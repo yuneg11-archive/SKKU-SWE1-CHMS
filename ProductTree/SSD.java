@@ -1,4 +1,7 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -21,6 +24,22 @@ class SSD extends Storage {
     	return "SSD";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+    	
+    	System.out.print(" Flash Memory Type: ");
+		this.memoryType = s.nextLine();
+		
+		System.out.print(" TBW (Tera Byte Written): ");
+		this.tbw = s.nextLong();
+		s.nextLine();
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -45,17 +64,17 @@ class SSD extends Storage {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":		obj.put(Str.productType, "SSD");
-					case "Name":			if(this.name != null) obj.put("Name", this.name);
-					case "Price": 			if(this.price != null) obj.put("Price", this.price);
-					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 		obj.put("Quantity", this.quantity);
-					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);
-					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);
-					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);
-					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);
-					case "MemoryType": 		if(this.memoryType != null) obj.put("MemoryType", this.memoryType);
-					case "TBW": 			if(this.tbw != null) obj.put("TBW", this.tbw);
+					case "ProductType":		obj.put(Str.productType, "SSD");break;
+					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
+					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
+					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 		obj.put("Quantity", this.quantity);break;
+					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);break;
+					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);break;
+					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);break;
+					case "Slot": 			if(this.slot != null) obj.put("Slot", this.slot);break;
+					case "MemoryType": 		if(this.memoryType != null) obj.put("MemoryType", this.memoryType);break;
+					case "TBW": 			if(this.tbw != null) obj.put("TBW", this.tbw);break;
 				}
 			}
     		return obj.toJSONString();

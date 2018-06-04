@@ -1,10 +1,13 @@
 import JSON.JSONObject;
+
+import java.util.Scanner;
+
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
 class ImbeddedGraphic extends Graphic {
 	// Variable
-    private Long systemMemoryAlloc;
+    private Long systemMemoryAlloc;// Unit: MB
     
     // Constructor
     public ImbeddedGraphic() {
@@ -20,6 +23,19 @@ class ImbeddedGraphic extends Graphic {
     	return "ImbeddedGraphic";
     }
 
+    @Override
+    public void insert() {
+    	super.insert();
+    	
+    	Scanner s = new Scanner(System.in);    	
+
+		System.out.print(" System Memory Allocation (MB): ");
+		this.systemMemoryAlloc = s.nextLong();
+		s.nextLine();
+		
+		
+	}
+    
     public void setAttribute(String attributes) {
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
@@ -41,14 +57,14 @@ class ImbeddedGraphic extends Graphic {
     		JSONObject obj = new JSONObject();
     		for(Object key : keyArray) {
 				switch((String)key) {
-					case "ProductType":				obj.put(Str.productType, "ImbeddedGraphic");
-					case "Name":					if(this.name != null) obj.put("Name", this.name);
-					case "Manufacturer": 			if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);
-					case "Quantity": 				obj.put("Quantity", this.quantity);
-					case "CoreNumber": 				if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);
-					case "Fabrication": 			if(this.fabrication != null) obj.put("Fabrication", this.fabrication);
-					case "TDP": 					if(this.tdp != null) obj.put("TDP", this.tdp);
-					case "SystemMemoryAllocation": 	if(this.systemMemoryAlloc != null) obj.put("SystemMemoryAllocation", this.systemMemoryAlloc);
+					case "ProductType":				obj.put(Str.productType, "ImbeddedGraphic");break;
+					case "Name":					if(this.name != null) obj.put("Name", this.name);break;
+					case "Manufacturer": 			if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
+					case "Quantity": 				obj.put("Quantity", this.quantity);break;
+					case "CoreNumber": 				if(this.coreNumber != null) obj.put("CoreNumber", this.coreNumber);break;
+					case "Fabrication": 			if(this.fabrication != null) obj.put("Fabrication", this.fabrication);break;
+					case "TDP": 					if(this.tdp != null) obj.put("TDP", this.tdp);break;
+					case "SystemMemoryAllocation": 	if(this.systemMemoryAlloc != null) obj.put("SystemMemoryAllocation", this.systemMemoryAlloc);break;
 				}
 			}
     		return obj.toJSONString();
