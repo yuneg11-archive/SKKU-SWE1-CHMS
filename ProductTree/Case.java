@@ -34,6 +34,7 @@ class Case extends Product {
     }
     
     public void setAttribute(String attributes) {
+		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
     	try {
     		JSONObject obj = (JSONObject)(new JSONParser().parse(attributes));
     		if(obj.containsKey(Str.name)) 		this.name 			= (String)obj.get(Str.name);
@@ -45,6 +46,7 @@ class Case extends Product {
     	}
     }
     public String getAttribute(String keys) {
+		/* keys : {"Keys":["ProductType", "Name", "Price"]} */
     	try {
 			JSONObject required = (JSONObject)(new JSONParser().parse(keys));
 			JSONArray keyArray = (JSONArray)required.get("Keys");
