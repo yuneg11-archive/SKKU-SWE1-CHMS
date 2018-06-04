@@ -33,20 +33,16 @@ class CPU extends Processor {
 		while(true) {
 			System.out.print(" Has Imbedded Graphic? (Y/N): ");
 			
-			if(s.nextLine().compareTo("Y")==0) {
+			if(s.nextLine().compareTo("Y") == 0) {
 				System.out.println("===============Imbedded Graphic===============");
 				ImbeddedGraphic imb = new ImbeddedGraphic();
 				imb.insert();
 				this.imbeddedGraphic = imb;
 				break;
 			}
-			else if(s.nextLine().compareTo("N")==0) break;
+			else if(s.nextLine().compareTo("N") == 0) break;
 			else System.out.println("Invalid Input");
 		}
-		
-		
-		
-		
 	}
     
     public void setAttribute(String attributes) {

@@ -19,7 +19,6 @@ class DataManagement {
 
     void insert() {
     	
-        
         Scanner s = new Scanner(System.in);
         
         int type;
@@ -112,5 +111,52 @@ class DataManagement {
 			break;
 		}
         s.close();
+	}
+
+	ArrayList<Integer> searchProductCondition(String conditions) {
+		/* conditions : {"Condition":[{"Mode":"Exist", "Attribute":"Price"}]} */
+		/* conditions : {"Condition":[{"Mode":"Match", "Attribute":"Name", "Value":"i5"}]} */
+		/* conditions : {"Condition":[{"Mode":"Range", "Attribute":"Price", "LowerBound":10000, "UpperBound":50000}]} */
+		ArrayList<Integer> productIndex = new ArrayList<>();
+		for(int i = 0; i < this.products.size(); i++) {
+			productIndex.add(i);
+		}
+		try {
+			JSONObject obj = (JSONObject)(new JSONParser().parse(conditions));
+			JSONArray conditionArray = (JSONArray)obj.get("Condition");
+			for(Object conditionObj : conditionArray) {
+				JSONObject condition = (JSONObject)conditionObj;
+				for(int i = productIndex.size()-1; i >= 0; i--) {
+					JSONObject require = new JSONObject();
+					JSONArray key = new JSONArray();
+					key.add((String)condition.get("Attribute"));
+					require.put("Keys", key);
+					String attribute = products.get(productIndex.get(i)).product.getAttribute(require.toJSONString());
+					JSONObject result = (JSONObject)(new JSONParser().parse(attribute));
+					Object value = result.get((String)condition.get("Attribute"));
+
+					if(value == null) { // Attribute doesn't exist in target product
+						productIndex.remove(productIndex.get(i));
+					}
+
+					if(((String)condition.get("Mode")).equals("Match")) {
+						if(!value.toString().equals(condition.get("Value").toString())) {
+							productIndex.remove(productIndex.get(i));
+						}
+					} else if(((String)condition.get("Mode")).equals("Range")) {
+						Double doubleValue = Double.parseDouble(value.toString());
+						Double lowerBound = Double.parseDouble(condition.get("LowerBound").toString());
+						Double upperBound = Double.parseDouble(condition.get("UpperBound").toString());
+						if(doubleValue < lowerBound || doubleValue > upperBound) {
+							productIndex.remove(productIndex.get(i));
+						}
+					}
+				}
+			}
+			return productIndex;
+    	} catch(Exception exc) {
+			System.out.println("Unexpected error occurred");
+			return null;
+    	}
 	}
 }

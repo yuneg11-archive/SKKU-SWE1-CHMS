@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class CHMS {
     private static final String databaseFileName = "database.txt";
@@ -14,6 +15,9 @@ public class CHMS {
         //System.out.println(dm.getProducts().get(2).toJSONObject().toJSONString());
         /* Do What You Want */
 
+        ArrayList<Integer> list = dm.searchProductCondition("{\"Condition\":[{\"Mode\":\"Range\", \"Attribute\":\"CoreNumber\", \"LowerBound\":2, \"UpperBound\":3}]}");
+        System.out.println(list.toString());
+        
         while(true) {
         	int function;
         	System.out.println("===============MAIN MENU===============");
