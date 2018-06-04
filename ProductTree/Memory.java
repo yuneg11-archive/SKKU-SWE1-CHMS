@@ -14,10 +14,8 @@ class Memory extends Product {
     
     // Constructor
     public Memory() {
-		this.quantity = 1L;
     }
     public Memory(String attributes) {
-		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -64,7 +62,6 @@ class Memory extends Product {
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
 			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
-			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("Capacity"))		this.capacity 		= (Long)obj.get("Capacity");
     		if(obj.containsKey("ClockRate"))	this.clockRate 		= (Long)obj.get("ClockRate");
     		if(obj.containsKey("ErrorCheck"))	this.errorCheck 	= (Boolean)obj.get("ErrorCheck");
@@ -84,7 +81,6 @@ class Memory extends Product {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
-					case "Quantity": 		obj.put("Quantity", this.quantity);break;
 					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);break;
 					case "ClockRate": 		if(this.clockRate != null) obj.put("ClockRate", this.clockRate);break;
 					case "ErrorCheck": 		if(this.errorCheck != null) obj.put("ErrorCheck", this.errorCheck);break;
@@ -104,7 +100,6 @@ class Memory extends Product {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
-		keyArray.add(Str.quantity);
 		keyArray.add(Str.capacity);
 		keyArray.add(Str.clockRate);
 		keyArray.add(Str.errorCheck);

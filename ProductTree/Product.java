@@ -6,7 +6,6 @@ abstract class Product {
     protected String name;
     protected Long price;
     protected String manufacturer;
-    protected Long quantity;
 
     // Setter & Getter
     public abstract String getProductType();
@@ -25,10 +24,7 @@ abstract class Product {
 		s.nextLine();
 		
 		System.out.print(" Manufacturer: ");
-		this.manufacturer = s.nextLine();
-		
-		System.out.print(" Quantity: ");
-		this.quantity = s.nextLong();		
+		this.manufacturer = s.nextLine();	
     }
     
 }

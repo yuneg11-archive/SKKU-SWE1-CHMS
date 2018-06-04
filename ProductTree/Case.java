@@ -11,10 +11,8 @@ class Case extends Product {
     
     // Constructor
     public Case() {
-		this.quantity = 1L;
     }
     public Case(String attributes) {
-		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -41,7 +39,6 @@ class Case extends Product {
     		if(obj.containsKey(Str.name)) 		this.name 			= (String)obj.get(Str.name);
     		if(obj.containsKey(Str.price)) 		this.price 			= (Long)obj.get(Str.price);
 			if(obj.containsKey(Str.manufacturer)) this.manufacturer = (String)obj.get(Str.manufacturer);
-			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey(Str.formFactor))	this.formFactor 	= (String)obj.get(Str.formFactor);
     	} catch(Exception exc) {
     		System.out.println("Unexpected error occurred");
@@ -58,7 +55,6 @@ class Case extends Product {
 					case "Name":			if(this.name != null) obj.put(Str.name, this.name);break;
 					case "Price": 			if(this.price != null) obj.put(Str.price, this.price);break;
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put(Str.manufacturer, this.manufacturer);break;
-					case "Quantity": 		obj.put("Quantity", this.quantity);break;
 					case "FormFactor": 		if(this.formFactor != null) obj.put(Str.formFactor, this.formFactor);break;
 				}
 			}
@@ -75,7 +71,6 @@ class Case extends Product {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
-		keyArray.add(Str.quantity);
 		keyArray.add(Str.formFactor);
 		obj.put("Keys", keyArray);
 		try {

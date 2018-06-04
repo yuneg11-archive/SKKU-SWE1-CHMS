@@ -18,15 +18,15 @@ class FileManagement {
     }
 
     // Load Database 
-    ArrayList<Product> loadDatabase() {
-        ArrayList<Product> products = new ArrayList<Product>();
+    ArrayList<ProductLongPair> loadDatabase() {
+        ArrayList<ProductLongPair> products = new ArrayList<ProductLongPair>();
         
         try {
             BufferedReader br = new BufferedReader(new FileReader(databaseFileName));
             String line = br.readLine();
             while(line != null) {
                 /*Debug*///System.out.println(line);
-                products.add(StringtoProduct(line));
+                products.add(StringtoProductQuantity(line));
                 line = br.readLine();
             }
             br.close();
@@ -50,11 +50,14 @@ class FileManagement {
     }
 
     // Save Database
-    void saveDatabase(ArrayList<Product> products) {
+    void saveDatabase(ArrayList<ProductLongPair> products) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(databaseFileName));
-            for(Product product : products) {
-                bw.write(product.toJSONObject().toJSONString());
+            for(ProductLongPair productAndQuantity : products) {
+                JSONObject obj = new JSONObject();
+                obj.put("Product", productAndQuantity.product.toJSONObject());
+                obj.put("Quantity", productAndQuantity.num);
+                bw.write(obj.toJSONString());
                 bw.newLine();
             }
             bw.close();
@@ -63,8 +66,10 @@ class FileManagement {
         }
     }
 
-    Product StringtoProduct(String str) throws Exception {
-    	JSONObject obj = (JSONObject)(new JSONParser().parse(str));
+    ProductLongPair StringtoProductQuantity(String str) throws Exception {
+        JSONObject productAndQuantity = (JSONObject)(new JSONParser().parse(str));
+        JSONObject obj = (JSONObject)productAndQuantity.get("Product");
+        Long quantity = (Long)productAndQuantity.get("Quantity");
         String productType = (String)obj.get("ProductType");
         Product product;
         switch(productType) {
@@ -80,6 +85,6 @@ class FileManagement {
         	case "SSD": 			product = new SSD(obj.toJSONString()); break;
         	default: 				product = null;
         }
-        return product;
+        return new ProductLongPair(product, quantity);
     }
 }

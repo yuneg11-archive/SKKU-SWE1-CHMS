@@ -12,10 +12,8 @@ class HDD extends Storage {
     
  // Constructor
     public HDD() {
-		this.quantity = 1L;
     }
     public HDD(String attributes) {
-		this.quantity = 1L;
     	setAttribute(attributes);
     }
     
@@ -46,7 +44,6 @@ class HDD extends Storage {
     		if(obj.containsKey("Name")) 		this.name 			= (String)obj.get("Name");
     		if(obj.containsKey("Price")) 		this.price 			= (Long)obj.get("Price");
 			if(obj.containsKey("Manufacturer")) this.manufacturer 	= (String)obj.get("Manufacturer");
-			if(obj.containsKey(Str.quantity))	this.quantity 		= (Long)obj.get(Str.quantity);
     		if(obj.containsKey("Capacity"))		this.capacity 		= (Long)obj.get("Capacity");
     		if(obj.containsKey("ReadSpeed"))	this.readSpeed 		= (Long)obj.get("ReadSpeed");
     		if(obj.containsKey("WriteSpeed"))	this.writeSpeed 	= (Long)obj.get("WriteSpeed");
@@ -68,7 +65,6 @@ class HDD extends Storage {
 					case "Name":			if(this.name != null) obj.put("Name", this.name);break;
 					case "Price": 			if(this.price != null) obj.put("Price", this.price);break;
 					case "Manufacturer": 	if(this.manufacturer != null) obj.put("Manufacturer", this.manufacturer);break;
-					case "Quantity": 		obj.put("Quantity", this.quantity);break;
 					case "Capacity": 		if(this.capacity != null) obj.put("Capacity", this.capacity);break;
 					case "ReadSpeed": 		if(this.readSpeed != null) obj.put("ReadSpeed", this.readSpeed);break;
 					case "WriteSpeed": 		if(this.writeSpeed != null) obj.put("WriteSpeed", this.writeSpeed);break;
@@ -90,7 +86,6 @@ class HDD extends Storage {
 		keyArray.add(Str.name);
 		keyArray.add(Str.price);
 		keyArray.add(Str.manufacturer);
-		keyArray.add(Str.quantity);
 		keyArray.add(Str.capacity);
 		keyArray.add(Str.readSpeed);
 		keyArray.add(Str.writeSpeed);
