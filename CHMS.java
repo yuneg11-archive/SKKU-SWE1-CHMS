@@ -11,12 +11,12 @@ public class CHMS {
         // Demo output
         //System.out.println(dm.getProducts().get(0).toJSONObject().toJSONString());
         //System.out.println(dm.getProducts().get(1).toJSONObject().toJSONString());
-        //System.out.println(dm.getProducts().get(1).getAttribute("{\"Keys\":[\"Price\",\"ProductType\"]}"));
+        //System.out.println(dm.getProducts().get(1).product.getAttribute("{\"Keys\":[\"Price\"]}"));
+        //System.out.println(dm.getProducts().get(1).product.toJSONObject().get("Name"));
         //System.out.println(dm.getProducts().get(2).toJSONObject().toJSONString());
         /* Do What You Want */
 
-        ArrayList<Integer> list = dm.searchProductCondition("{\"Condition\":[{\"Mode\":\"Range\", \"Attribute\":\"CoreNumber\", \"LowerBound\":2, \"UpperBound\":3}]}");
-        System.out.println(list.toString());
+       
         
         while(true) {
         	int function;
@@ -35,6 +35,7 @@ public class CHMS {
         		dm.insert();
         		break;
         	case 2://Modify
+        		dm.search();
         		break;
         	case 3://Delete
         		break;

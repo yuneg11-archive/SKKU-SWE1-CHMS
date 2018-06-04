@@ -7,7 +7,7 @@ import JSON.parser.JSONParser;
 
 class Memory extends Product {
 	// Variable
-    private Long capacity; // Unit: GB
+    private Long capacity; // Unit: MB
     private Long clockRate; // Unit: MHz
     private Boolean errorCheck; // ECC
     private String standard; // DDR#
@@ -30,8 +30,9 @@ class Memory extends Product {
     	
     	Scanner s = new Scanner(System.in);    	
 
-		System.out.print(" Capacity (GB): ");
+		System.out.print(" Capacity (MB): ");
 		this.capacity = s.nextLong();
+		s.nextLine();
 		
 		System.out.print(" Clock Rate (MHz): ");
 		this.clockRate = s.nextLong();

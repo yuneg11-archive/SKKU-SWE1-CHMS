@@ -16,10 +16,10 @@ abstract class Product {
     public void insert() {
     	Scanner s = new Scanner(System.in);
     	
-    	System.out.print(" Name: ");
+    	System.out.print(" Name: (Name is unique)");
 		this.name = s.nextLine();
 		
-		System.out.print(" Price (Won): ");
+		System.out.print(" Price (Won, 0 if imbedded): ");
 		this.price = s.nextLong();
 		s.nextLine();
 		
