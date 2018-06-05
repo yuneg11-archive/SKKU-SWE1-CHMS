@@ -71,6 +71,36 @@ class PowerSupply extends Product {
 
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+			long types;
+
+			if (!keyArray.contains(Str.ratedOutput))
+				System.out.println(UI.content("Rated Output: "+this.ratedOutput+"W"));
+
+			if (!keyArray.contains(Str.formFactor))
+				System.out.println(UI.content("Form Factor: "+this.formFactor));
+
+			if (!keyArray.contains(Str.certification))
+				System.out.println(UI.content("Certification: "+this.certification));
+
+			if (!keyArray.contains(Str.connector)) {
+				types = connectors.size();
+				for (int i = 0; i < types; i++) {
+					System.out.println(UI.subtitle("Connector #"+String.valueOf(i+1)));
+					System.out.println(UI.content(this.connectors.get(i).name+" - "+String.valueOf(this.connectors.get(i).num)+"ea"));
+				}
+			}
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

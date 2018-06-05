@@ -41,6 +41,24 @@ class ImbeddedGraphic extends Graphic {
 		}
 	}
 
+	public void print(String excludeKeys) {
+		try {
+			JSONObject exclude = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) exclude.get("ExcludeKey");
+			keyArray.add(Str.memory);
+			keyArray.add(Str.price);
+			keyArray.add(Str.name);
+			keyArray.add(Str.tdp);
+			super.print(exclude.toJSONString());
+
+			if (!keyArray.contains(Str.systemMemoryAlloc))
+				System.out.println(UI.content("System Memory Allocation: "+this.systemMemoryAlloc+"MB"));
+
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

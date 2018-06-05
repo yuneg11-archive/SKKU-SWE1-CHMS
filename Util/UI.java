@@ -1,10 +1,14 @@
+import JSON.JSONObject;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public class UI {
     static final int width = 73;
-    static final String openBox  = "╔═════════════════════════════════════════════════════════════════════════╗";
-    static final String closeBox = "╚═════════════════════════════════════════════════════════════════════════╝";
+    static final String openBox    = "╔═════════════════════════════════════════════════════════════════════════╗";
+    static final String closeBox   = "╚═════════════════════════════════════════════════════════════════════════╝";
+    static final String seperatingLine = "╟─────────────────────────────────────────────────────────────────────────╢";
     static void print(int level, String msg) {
 
     }
@@ -56,6 +60,7 @@ public class UI {
         content += "║";
         return content;
     }
+
     static String prompt(String msg) {
         return " "+msg;
     }

@@ -44,6 +44,24 @@ class HDD extends Storage {
 
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+
+			if (!keyArray.contains(Str.diskSize))
+				System.out.println(UI.content("Disk Size: "+this.diskSize+"inch"));
+
+			if (!keyArray.contains(Str.rpm)) {
+				System.out.println(UI.content("RPM: "+this.rpm+"rpm"));
+			}
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

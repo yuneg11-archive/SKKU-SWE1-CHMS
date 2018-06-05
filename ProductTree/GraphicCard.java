@@ -58,6 +58,30 @@ class GraphicCard extends Graphic {
 
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+			long types;
+
+			if (!keyArray.contains(Str.slot))
+				System.out.println(UI.content("Slot: "+this.slot));
+
+			if (!keyArray.contains(Str.port)) {
+				types = ports.size();
+				for (int i = 0; i < types; i++) {
+					System.out.println(UI.subtitle("Port #"+String.valueOf(i+1)));
+					System.out.println(UI.content(this.ports.get(i).name+" - "+String.valueOf(this.ports.get(i).num)+"ea"));
+				}
+			}
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

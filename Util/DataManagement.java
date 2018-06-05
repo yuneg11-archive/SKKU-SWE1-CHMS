@@ -15,6 +15,8 @@ class DataManagement {
         return products;
     }
 
+
+
     void insert() {
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Match");
@@ -384,13 +386,17 @@ class DataManagement {
 		printProduct(al);
 	}
 	void printProduct(ArrayList<Integer> index) {
-		System.out.println(UI.title("Product List"));
-		System.out.println(UI.content("Index | Name         | Type        | Price    | Manufacturer     | Q'ty"));
-		for(int i = 0; i < index.size(); i++) {
+    	int size = index.size();
+        System.out.println(UI.title("Product List"));
+        for (int i = 0; i < size; i++) {
 			Product pd = products.get(index.get(i)).product;
-			Long qt = products.get(index.get(i)).num;
-			System.out.println(UI.content(String.format("%5d | %-12s | %-11s |%9d | %-16s | %4d", i+1, pd.name, pd.productType, pd.price, pd.manufacturer, qt)));
-		}
+            Long qt = products.get(index.get(i)).num;
+
+            System.out.println(UI.subcontent("< Product #"+String.valueOf(i+1)+" - "+pd.getProductType()+" > : "+String.valueOf(qt)+"ea"));
+			pd.print("{\"ExcludeKey\":[]}");
+			if(i!=size-1) //not a last product
+				System.out.println(UI.seperatingLine);
+        }
 		System.out.println(UI.closeBox);
 	}
 }

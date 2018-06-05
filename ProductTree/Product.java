@@ -24,7 +24,7 @@ abstract class Product {
             JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 
             if (!keyArray.contains(Str.name)) {
-                System.out.print(" Name: ");
+                System.out.print(" Name (Name is unique): ");
                 this.name = s.nextLine();
             }
 
@@ -43,4 +43,22 @@ abstract class Product {
         }
     }
 
+    public void print(String excludeKeys) {
+        try {
+            JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+            JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+
+            if (!keyArray.contains(Str.name))
+                System.out.println(UI.content("Name: "+this.name));
+
+            if (!keyArray.contains(Str.price))
+                System.out.println(UI.content("Price: "+this.price+"Won"));
+
+            if (!keyArray.contains(Str.manufacturer))
+                System.out.println(UI.content("Manufacturer: "+this.manufacturer));
+
+        } catch (Exception exc) {
+            System.out.println("Unexpected error occurred");
+        }
+    }
 }

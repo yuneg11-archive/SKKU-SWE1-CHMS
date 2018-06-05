@@ -68,6 +68,36 @@ class Memory extends Product {
 
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+
+			if (!keyArray.contains(Str.capacity))
+				System.out.println(UI.content("Capacity: "+this.capacity+"MB"));
+
+			if (!keyArray.contains(Str.clockRate))
+				System.out.println(UI.content("Clock Rate: "+this.clockRate+"MHz"));
+
+			if (!keyArray.contains(Str.errorCheck)) {
+				if(this.errorCheck)
+					System.out.println(UI.content("Error Check: Yes"));
+				else
+					System.out.println(UI.content("Error Check: No"));
+			}
+
+			if (!keyArray.contains(Str.standard)) {
+				System.out.print(" Standard (\"DDR#\"): ");
+				System.out.println(UI.content("Standard: "+this.standard));
+			}
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

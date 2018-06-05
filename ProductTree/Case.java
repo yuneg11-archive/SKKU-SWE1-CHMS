@@ -37,6 +37,19 @@ class Case extends Product {
 		}
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+
+			if (!keyArray.contains(Str.formFactor))
+				System.out.println(UI.content("Form Factor: "+this.formFactor));
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

@@ -87,6 +87,44 @@ class Mainboard extends Product {
 
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+			long types;
+
+			if (!keyArray.contains(Str.chipset))
+				System.out.println(UI.content("Chipset: "+this.chipset));
+
+			if (!keyArray.contains(Str.formFactor))
+				System.out.println(UI.content("Form Factor: "+this.formFactor));
+
+			if (!keyArray.contains(Str.cpuSocket))
+				System.out.println(UI.content("CPU Socket: "+this.cpuSocket));
+
+			if (!keyArray.contains(Str.slot)) {
+				types = slots.size();
+				for (int i = 0; i < types; i++) {
+					System.out.println(UI.subtitle("Slot #"+String.valueOf(i+1)));
+					System.out.println(UI.content(this.slots.get(i).name+" - "+String.valueOf(this.slots.get(i).num)+"ea"));
+				}
+			}
+
+			if (!keyArray.contains(Str.port)) {
+				types = ports.size();
+				for (int i = 0; i < types; i++) {
+					System.out.println(UI.subtitle("Port #"+String.valueOf(i+1)));
+					System.out.println(UI.content(this.ports.get(i).name+" - "+String.valueOf(this.ports.get(i).num)+"ea"));
+				}
+			}
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {

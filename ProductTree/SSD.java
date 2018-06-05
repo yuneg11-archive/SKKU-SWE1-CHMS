@@ -42,6 +42,24 @@ class SSD extends Storage {
 		}
 	}
 
+	public void print(String excludeKeys) {
+		super.print(excludeKeys);
+
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+
+			if (!keyArray.contains(Str.memoryType))
+				System.out.println(UI.content("Flash Memory Type: "+this.memoryType));
+
+			if (!keyArray.contains(Str.tbw))
+				System.out.println(UI.content("Tera Byte Written: "+this.tbw+"TBW"));
+
+		} catch (Exception exc) {
+			System.out.println("Unexpected error occurred");
+		}
+	}
+
 	public void setAttribute(String attributes) {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
