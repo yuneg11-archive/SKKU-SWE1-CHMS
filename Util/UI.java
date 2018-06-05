@@ -25,7 +25,7 @@ public class UI {
             if(select >= lowerBound && select <= upperBound) break;
             else System.out.println(" Invalid number");
         } while(true);
-        input.close();
+        //input.close(); //Can make exception
         return select;
     }
 }

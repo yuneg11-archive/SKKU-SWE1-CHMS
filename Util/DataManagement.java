@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -31,12 +29,7 @@ class DataManagement {
         System.out.println("4. Graphic Card \t5. Power Supply");
         System.out.println("6. SSD \t7. HDD \t\t8. Case");
         System.out.println("9. Expansion Card");
-        do {
-            System.out.print(" Select: ");
-            type = s.nextInt();
-            if(type >= 1 && type <= 9) break;
-            else System.out.println("Invalid number");
-        } while(true);
+        type = UI.inputRange(1, 9);
         
 		Long quantity;
 		ArrayList<Integer> searched= new ArrayList<Integer>();
@@ -44,7 +37,7 @@ class DataManagement {
     	case 1://CPU
     		System.out.println("===============CPU===============");
     		CPU cpu = new CPU();
-			cpu.insert();
+			cpu.insert("{\"ExcludeKeys\":[]}");
 			// Search if product with this name cpu.toJSONObject().get("Name") exists;
 			// for all arraylist searched, check if any 
 			// products.get(searched).product.toJSONObject().get(Str.producttype) is CPU
@@ -58,13 +51,13 @@ class DataManagement {
 				products.add(new ProductLongPair(cpu, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
 			break;
     	case 2://Mainboard
     		System.out.println("===============Mainboard===============");
     		Mainboard mb = new Mainboard();
-			mb.insert();
+			mb.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", mb.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -73,13 +66,13 @@ class DataManagement {
 				products.add(new ProductLongPair(mb, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 3://Memory
     		System.out.println("===============Memory===============");
     		Memory mem = new Memory();
-			mem.insert();
+			mem.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", mem.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -88,13 +81,13 @@ class DataManagement {
 				products.add(new ProductLongPair(mem, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 4://Graphic Card
     		System.out.println("===============Graphic Card===============");
     		GraphicCard graphic = new GraphicCard();
-			graphic.insert();
+			graphic.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", graphic.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -103,13 +96,13 @@ class DataManagement {
 				products.add(new ProductLongPair(graphic, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 5://Power Supply
     		System.out.println("===============Power Supply===============");
     		PowerSupply ps = new PowerSupply();
-			ps.insert();
+			ps.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", ps.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -118,13 +111,13 @@ class DataManagement {
 				products.add(new ProductLongPair(ps, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 6://SSD
     		System.out.println("===============SSD===============");
     		SSD ssd = new SSD();
-			ssd.insert();
+			ssd.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", ssd.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -133,13 +126,13 @@ class DataManagement {
 				products.add(new ProductLongPair(ssd, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 7://HDD
     		System.out.println("===============HDD===============");
     		HDD hdd = new HDD();
-			hdd.insert();
+			hdd.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", hdd.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -148,13 +141,13 @@ class DataManagement {
 				products.add(new ProductLongPair(hdd, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 8://Case
     		System.out.println("===============Case===============");
     		Case c = new Case();
-			c.insert();
+			c.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", c.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -163,13 +156,13 @@ class DataManagement {
 				products.add(new ProductLongPair(c, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
     		break;
     	case 9://Expansion Card
     		System.out.println("===============Expansion Card===============");
     		ExpansionCard expc = new ExpansionCard();
-			expc.insert();
+			expc.insert("{\"ExcludeKeys\":[]}");
 			obj.put("Value", expc.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
 			System.out.print(" Quantity: ");
@@ -178,11 +171,11 @@ class DataManagement {
 				products.add(new ProductLongPair(expc, quantity));
 			else {						//existing product
 				System.out.println(" Product of same name already exist. Accumulate quantity.");
-				products.get(searched.get(0)).num += s.nextLong();
+				products.get(searched.get(0)).num += quantity;
 			}
 			break;
 		}
-		s.close();
+		//s.close();
 	}
 
 	ArrayList<Integer> searchProductCondition(String conditionStr) {
@@ -239,7 +232,7 @@ class DataManagement {
         System.out.println("6. SSD \t7. HDD \t\t8. Case");
         System.out.println("9. Expansion Card");
         
-        s.close();
+        //s.close();
 	}
 	
 	void delete() {
