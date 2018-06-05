@@ -23,16 +23,19 @@ public class CHMS {
                 break;
             case 5:// Sort
                 break;
-            case 6:// Cost Estimation
+            case 6:// List
+                dm.list();
                 break;
-            case 7:// Exit
+            case 7:// Cost Estimation
+                break;
+            case 8:// Exit
                 exit = true;
                 break;
             }
             // break; //for debugging
         } while (!exit);
 
-        System.out.println("Program over");
+        System.out.println(" Program over");
         fm.saveDatabase(dm.getProducts());
     }
 }

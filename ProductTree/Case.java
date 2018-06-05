@@ -27,7 +27,7 @@ class Case extends Product {
 		super.insert(excludeKeys);
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
-			JSONArray keyArray = (JSONArray) required.get("ExcludeKeys");
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 
 			Scanner s = new Scanner(System.in);
 

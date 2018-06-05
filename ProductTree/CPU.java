@@ -28,7 +28,7 @@ class CPU extends Processor {
 
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
-			JSONArray keyArray = (JSONArray) required.get("ExcludeKeys");
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 			Scanner s = new Scanner(System.in);
 
 			if (!keyArray.contains(Str.cpuSocket)) {
@@ -37,20 +37,13 @@ class CPU extends Processor {
 			}
 
 			if (!keyArray.contains(Str.imbeddedGraphic)) {
-				while (true) {
-					System.out.print(" Has Imbedded Graphic? (Y/N): ");
-
-					String answer = s.nextLine();
-					if (answer.compareTo("Y") == 0) {
-						System.out.println("===============Imbedded Graphic===============");
-						ImbeddedGraphic imb = new ImbeddedGraphic();
-						imb.insert("{\"ExcludeKeys\":[]}");
-						this.imbeddedGraphic = imb;
-						break;
-					} else if (answer.compareTo("N") == 0)
-						break;
-					else
-						System.out.println("Invalid Input");
+				boolean answer = UI.inputYesNo(" Has Imbedded Graphic? (Y/N): ");
+				if (answer) {
+					System.out.println(" ==========Imbedded Graphic==========");
+					ImbeddedGraphic imb = new ImbeddedGraphic();
+					imb.insert("{\"ExcludeKey\":[]}");
+					this.imbeddedGraphic = imb;
+					System.out.println(" ====================================");
 				}
 			}
 		} catch (Exception exc) {

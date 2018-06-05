@@ -25,9 +25,11 @@ class ImbeddedGraphic extends Graphic {
 	public void insert(String excludeKeys) {
 		try {
 			JSONObject exclude = (JSONObject) (new JSONParser().parse(excludeKeys));
-			JSONArray keyArray = (JSONArray) exclude.get("ExcludeKeys");
+			JSONArray keyArray = (JSONArray) exclude.get("ExcludeKey");
 			keyArray.add(Str.memory);
 			keyArray.add(Str.price);
+			keyArray.add(Str.name);
+			keyArray.add(Str.tdp);
 			super.insert(exclude.toJSONString());
 			Scanner s = new Scanner(System.in);
 

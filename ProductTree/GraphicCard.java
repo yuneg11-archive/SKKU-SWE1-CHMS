@@ -31,7 +31,7 @@ class GraphicCard extends Graphic {
 
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
-			JSONArray keyArray = (JSONArray) required.get("ExcludeKeys");
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 			Scanner s = new Scanner(System.in);
 			long types;
 			String name;

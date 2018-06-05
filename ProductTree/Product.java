@@ -22,15 +22,15 @@ abstract class Product {
         Scanner s = new Scanner(System.in);
         try {
             JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
-            JSONArray keyArray = (JSONArray) required.get("ExcludeKeys");
+            JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 
             if (!keyArray.contains(Str.name)) {
-                System.out.print(" Name: (Name is unique)");
+                System.out.print(" Name: ");
                 this.name = s.nextLine();
             }
 
             if (!keyArray.contains(Str.price)) {
-                System.out.print(" Price (Won, 0 if imbedded): ");
+                System.out.print(" Price (Won): ");
                 this.price = s.nextLong();
                 s.nextLine();
             }
