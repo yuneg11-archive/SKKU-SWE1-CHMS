@@ -22,14 +22,7 @@ class DataManagement {
 
         Scanner s = new Scanner(System.in);
         
-		int type;
-        System.out.println("===============INSERT===============");
-        System.out.println("-Type");
-        System.out.println("1. CPU \t2. Mainboard \t3. Memory");
-        System.out.println("4. Graphic Card \t5. Power Supply");
-        System.out.println("6. SSD \t7. HDD \t\t8. Case");
-        System.out.println("9. Expansion Card");
-        type = UI.inputRange(1, 9);
+        int type = UI.printInsert();
         
 		Long quantity;
 		ArrayList<Integer> searched= new ArrayList<Integer>();
@@ -319,21 +312,18 @@ class DataManagement {
 	}
 
 	void printProduct(int index) {
-		System.out.println("╔══════════════════════ Product List ═══════════════════════╗");
-		System.out.println("║ Index | Name         | Price    | Manufacturer     | Q'ty ║");
-		Product pd = products.get(index).product;
-		Long qt = products.get(index).num;
-		System.out.printf("║ %5d | %-12s | %8d | %-16s | %4d ║\n", 1, pd.name, pd.price, pd.manufacturer, qt);
-		System.out.println("╚═══════════════════════════════════════════════════════════╝");
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		al.add(index);
+		printProduct(al);
 	}
 	void printProduct(ArrayList<Integer> index) {
-		System.out.println("╔══════════════════════ Product List ═══════════════════════╗");
-		System.out.println("║ Index | Name         | Price    | Manufacturer     | Q'ty ║");
+		System.out.println("╔═════════════════════════════ Product List ══════════════════════════════╗");
+		System.out.println("║ Index | Name         | Type        | Price    | Manufacturer     | Q'ty ║");
 		for(int i = 0; i < index.size(); i++) {
 			Product pd = products.get(index.get(i)).product;
 			Long qt = products.get(index.get(i)).num;
-			System.out.printf("║ %5d | %-12s | %8d | %-16s | %4d ║\n", i+1, pd.name, pd.price, pd.manufacturer, qt);
+			System.out.printf("║ %5d | %-12s | %11s |%8d | %-16s | %4d ║\n", 1, pd.name, pd.getProductType(), pd.price, pd.manufacturer, qt);
 		}
-		System.out.println("╚═══════════════════════════════════════════════════════════╝");
+		System.out.println("╚═════════════════════════════════════════════════════════════════════════╝");
 	}
 }
