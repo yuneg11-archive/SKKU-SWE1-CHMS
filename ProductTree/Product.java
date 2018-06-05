@@ -17,6 +17,10 @@ abstract class Product {
 
     public abstract JSONObject toJSONObject();
 
+    public String getProductType(){
+        return productType;
+    }
+
     public void insert(String excludeKeys) {
         Scanner s = new Scanner(System.in);
         try {
