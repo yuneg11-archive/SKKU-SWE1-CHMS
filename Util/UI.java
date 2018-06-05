@@ -34,7 +34,7 @@ public class UI {
         subtitle += "║";
         return subtitle;
     }
-    static String content(String msg) {
+    static String subcontent(String msg) {
         String content = "";
         int msgLen = msg.length()+3;
         content += "║";
@@ -45,6 +45,20 @@ public class UI {
         content += "║";
         return content;
     }
+    static String content(String msg) {
+        String content = "";
+        int msgLen = msg.length()+1;
+        content += "║";
+        content += (" " + msg);
+        for(int i = 0; i < width-msgLen; i++) {
+            content += " ";
+        }
+        content += "║";
+        return content;
+    }
+    static String prompt(String msg) {
+        return " "+msg;
+    }
 
     static int printMain() {
         System.out.printf("\n\n\n");
@@ -53,9 +67,9 @@ public class UI {
         System.out.println(closeBox);
         System.out.println(title("MAIN MENU"));
         System.out.println(subtitle("Functions"));
-        System.out.println(content("1. Insert         2. Modify         3. Delete        4. Search"));
-        System.out.println(content("5. Sort           6. List           7. Cost Estimation"));
-        System.out.println(content("8. Exit"));
+        System.out.println(subcontent("1. Insert         2. Modify         3. Delete        4. Search"));
+        System.out.println(subcontent("5. Sort           6. List           7. Cost Estimation"));
+        System.out.println(subcontent("8. Exit"));
         System.out.println(closeBox);
         return inputRange(1, 8);
     }
@@ -71,14 +85,14 @@ public class UI {
     }
 
     static void printDelete() {
-        System.out.println("╔═════════════════════════════════ Delete ════════════════════════════════╗");
-        System.out.println("║ - Enter product name to delete                                          ║");
+        System.out.println(title("Delete"));
+        System.out.println(subtitle("Enter product name to delete"));
         System.out.println(closeBox);
     }
 
     static void printModify() {
-        System.out.println("╔═════════════════════════════════ Modify ════════════════════════════════╗");
-        System.out.println("║ - Enter product name to modify                                          ║");
+        System.out.println(title("Modify"));
+        System.out.println(subtitle("Enter product name to modify"));
         System.out.println(closeBox);
     }
 
@@ -87,12 +101,12 @@ public class UI {
         int select;
         do {
             try {
-                System.out.print(" Select: ");
+                System.out.print(prompt("Select: "));
                 select = input.nextInt();
                 if(select >= lowerBound && select <= upperBound) break;
-                else System.out.println(" Invalid number");
+                else System.out.println(prompt("Invalid number"));
             } catch(InputMismatchException ex) {
-                System.out.println(" Invalid input");
+                System.out.println(prompt("Invalid input"));
                 input.nextLine();
             }
         } while(true);
@@ -102,14 +116,14 @@ public class UI {
     static boolean inputYesNo(String msg) {
         Scanner input = new Scanner(System.in);
         while (true) {
-            System.out.print(msg);
+            System.out.print(prompt(msg+": "));
             String answer = input.nextLine();
             if (answer.compareTo("Y") == 0 || answer.compareTo("y") == 0) {
                 return true;
             } else if (answer.compareTo("N") == 0 || answer.compareTo("n") == 0) {
                 return false;
             } else {
-                System.out.println(" Invalid Input");
+                System.out.println(prompt("Invalid input"));
             }
         }
     }
@@ -119,11 +133,11 @@ public class UI {
         Long value;
         do {
             try {
-                System.out.print(msg);
+                System.out.print(prompt(msg+": "));
                 value = input.nextLong();
                 break;
             } catch(InputMismatchException ex) {
-                System.out.println(" Invalid input");
+                System.out.println(prompt("Invalid input"));
                 input.nextLine();
             }
         } while(true);
@@ -133,7 +147,7 @@ public class UI {
     static String inputLine(String msg) {
         Scanner input = new Scanner(System.in);
         String value;
-        System.out.print(msg);
+        System.out.print(prompt(msg+": "));
         value = input.nextLine();
         return value;
     }

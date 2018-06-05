@@ -31,15 +31,9 @@ class DataManagement {
     		System.out.println("===============CPU===============");
     		CPU cpu = new CPU();
 			cpu.insert("{\"ExcludeKey\":[]}");
-			// Search if product with this name cpu.toJSONObject().get("Name") exists;
-			// for all arraylist searched, check if any 
-			// products.get(searched).product.toJSONObject().get(Str.producttype) is CPU
-			// if exists, products.get(searched).long+=s.nextLong(); then break
-			// if nothing happens, we need to add product
 			obj.put("Value", cpu.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(cpu, quantity));
 				printProduct(products.size()-1);
@@ -55,8 +49,7 @@ class DataManagement {
 			mb.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", mb.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(mb, quantity));
 				printProduct(products.size()-1);
@@ -72,8 +65,7 @@ class DataManagement {
 			mem.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", mem.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(mem, quantity));
 				printProduct(products.size()-1);
@@ -89,8 +81,7 @@ class DataManagement {
 			graphic.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", graphic.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(graphic, quantity));
 				printProduct(products.size()-1);
@@ -106,8 +97,7 @@ class DataManagement {
 			ps.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", ps.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(ps, quantity));
 				printProduct(products.size()-1);
@@ -123,8 +113,7 @@ class DataManagement {
 			ssd.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", ssd.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(ssd, quantity));
 				printProduct(products.size()-1);
@@ -140,8 +129,7 @@ class DataManagement {
 			hdd.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", hdd.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(hdd, quantity));
 				printProduct(products.size()-1);
@@ -157,8 +145,7 @@ class DataManagement {
 			c.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", c.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(c, quantity));
 				printProduct(products.size()-1);
@@ -174,8 +161,7 @@ class DataManagement {
 			expc.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", expc.toJSONObject().get("Name"));
 			searched = searchProductCondition(obj.toJSONString());
-			System.out.print(" Quantity: ");
-			quantity = s.nextLong();
+			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(expc, quantity));
 				printProduct(products.size()-1);
@@ -247,11 +233,8 @@ class DataManagement {
 	}
 	
 	void delete() {
-		Scanner s = new Scanner(System.in);
 		UI.printDelete();
-		System.out.print(" Name: ");
-		String name = s.nextLine();
-
+		String name = UI.inputLine("Name: ");
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
@@ -261,7 +244,7 @@ class DataManagement {
 			System.out.println(" Product \"" + name + "\" doesn't exist.");
 		} else {
 			printProduct((int)searched.get(0));
-			boolean answer = UI.inputYesNo(" Delete \"" + name + "\"? (Y/N): ");
+			boolean answer = UI.inputYesNo("Delete \"" + name + "\"? (Y/N)");
 			if(answer) {
 				products.remove((int)searched.get(0));
 				System.out.println(" Product \"" + name + "\" is deleted.");
@@ -272,11 +255,8 @@ class DataManagement {
 	}
 
 	void modify() {
-		Scanner s = new Scanner(System.in);
 		UI.printModify();
-		System.out.print(" Name: ");
-		String name = s.nextLine();
-
+		String name = UI.inputLine("Name");
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
@@ -286,21 +266,24 @@ class DataManagement {
 			System.out.println("Product \"" + name + "\" doesn't exist.");
 		} else {
 			printProduct((int)searched.get(0));
-			boolean answer = UI.inputYesNo(" Modify \"" + name + "\"? (Y/N): ");
+			boolean answer = UI.inputYesNo("Modify \"" + name + "\"? (Y/N)");
 			if(answer) {
 				JSONObject exclude = new JSONObject();
 				JSONArray keyArray = new JSONArray();
 				keyArray.add(Str.name);
 				exclude.put("ExcludeKey", keyArray);
 				products.get((int)searched.get(0)).product.insert(exclude.toJSONString());
-				System.out.print(" Quantity: ");
-				products.get((int)searched.get(0)).num = s.nextLong();
+				products.get((int)searched.get(0)).num = UI.inputLong("Quantity");
 				printProduct((int)searched.get(0));
 				System.out.println(" Product \"" + name + "\" is modified.");
 			} else {
 				System.out.println(" Modify canceled.");
 			}
 		}
+	}
+
+	void sort() {
+
 	}
 
 	void list() {
@@ -317,13 +300,13 @@ class DataManagement {
 		printProduct(al);
 	}
 	void printProduct(ArrayList<Integer> index) {
-		System.out.println("╔═════════════════════════════ Product List ══════════════════════════════╗");
-		System.out.println("║ Index | Name         | Type        | Price    | Manufacturer     | Q'ty ║");
+		System.out.println(UI.title("Product List"));
+		System.out.println(UI.content("Index | Name         | Type        | Price    | Manufacturer     | Q'ty"));
 		for(int i = 0; i < index.size(); i++) {
 			Product pd = products.get(index.get(i)).product;
 			Long qt = products.get(index.get(i)).num;
-			System.out.printf("║ %5d | %-12s | %11s |%8d | %-16s | %4d ║\n", 1, pd.name, pd.getProductType(), pd.price, pd.manufacturer, qt);
+			System.out.println(UI.content(String.format("%5d | %-12s | %-11s |%9d | %-16s | %4d", i+1, pd.name, pd.getProductType(), pd.price, pd.manufacturer, qt)));
 		}
-		System.out.println("╚═════════════════════════════════════════════════════════════════════════╝");
+		System.out.println(UI.closeBox);
 	}
 }

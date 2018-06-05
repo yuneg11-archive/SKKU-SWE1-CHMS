@@ -30,6 +30,7 @@ class FileManagement {
                 line = br.readLine();
             }
             br.close();
+            System.out.println(UI.prompt("Database loaded."));
             return products;
         } catch(FileNotFoundException ex) {
             File file = new File(databaseFileName);
@@ -41,7 +42,7 @@ class FileManagement {
             } catch(IOException e) {
                 System.out.println("Unexpected error occurred");
             }
-            /*Debug*/System.out.println("Database not exist. Opening new database.");
+            System.out.println(UI.prompt("Database not exist. Opening new database."));
             return null;
         } catch(Exception ex) {
             System.out.println("Unexpected error occurred");

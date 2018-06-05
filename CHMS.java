@@ -9,33 +9,20 @@ public class CHMS {
         do {
             int function = UI.printMain();
             switch (function) {
-            case 1:// Insert
-                dm.insert();
-                break;
-            case 2:// Modify
-                dm.modify();
-                break;
-            case 3:// Delete
-                dm.delete();
-                break;
-            case 4:// Search
-                dm.search();
-                break;
-            case 5:// Sort
-                break;
-            case 6:// List
-                dm.list();
-                break;
+            case 1: dm.insert(); break;
+            case 2: dm.modify(); break;
+            case 3: dm.delete(); break;
+            case 4: dm.search(); break;
+            case 5: dm.sort(); break;
+            case 6: dm.list(); break;
             case 7:// Cost Estimation
                 break;
-            case 8:// Exit
-                exit = true;
-                break;
+            case 8: exit = true; break;
             }
-            // break; //for debugging
-        } while (!exit);
+        } while(!exit);
 
-        System.out.println(" Program over");
+        System.out.println(UI.prompt("Program over."));
         fm.saveDatabase(dm.getProducts());
+        System.out.println(UI.prompt("Database Saved."));
     }
 }

@@ -37,7 +37,7 @@ class CPU extends Processor {
 			}
 
 			if (!keyArray.contains(Str.imbeddedGraphic)) {
-				boolean answer = UI.inputYesNo(" Has Imbedded Graphic? (Y/N): ");
+				boolean answer = UI.inputYesNo(" Has Imbedded Graphic? (Y/N)");
 				if (answer) {
 					System.out.println(" ==========Imbedded Graphic==========");
 					ImbeddedGraphic imb = new ImbeddedGraphic();
