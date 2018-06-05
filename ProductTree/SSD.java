@@ -10,18 +10,15 @@ class SSD extends Storage {
 
 	// Constructor
 	public SSD() {
+		this.productType = "SSD";
 	}
 
 	public SSD(String attributes) {
+		this.productType = "SSD";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "SSD";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -49,6 +46,8 @@ class SSD extends Storage {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

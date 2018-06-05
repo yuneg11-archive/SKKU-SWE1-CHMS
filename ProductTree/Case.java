@@ -11,18 +11,15 @@ class Case extends Product {
 
 	// Constructor
 	public Case() {
+		this.productType = "Case";
 	}
 
 	public Case(String attributes) {
+		this.productType = "Case";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "Case";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 		try {
@@ -44,6 +41,8 @@ class Case extends Product {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey(Str.name))
 				this.name = (String) obj.get(Str.name);
 			if (obj.containsKey(Str.price))

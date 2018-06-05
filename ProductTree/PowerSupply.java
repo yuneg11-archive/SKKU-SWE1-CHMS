@@ -14,20 +14,17 @@ class PowerSupply extends Product {
 
 	// Constructor
 	public PowerSupply() {
+		this.productType = "PowerSupply";
 		connectors = new ArrayList<>();
 	}
 
 	public PowerSupply(String attributes) {
+		this.productType = "PowerSupply";
 		connectors = new ArrayList<>();
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "PowerSupply";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -78,6 +75,8 @@ class PowerSupply extends Product {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

@@ -2,8 +2,8 @@ public class Str {
     public static String productType = "ProductType";
     public static String name = "Name";
     public static String price = "Price";
-    public static String quantity = "Quantity";
     public static String manufacturer = "Manufacturer";
+    public static String quantity = "Quantity";
     public static String formFactor = "FormFactor";
     public static String coreNumber = "CoreNumber";
     public static String clockRate = "ClockRate";

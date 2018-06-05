@@ -14,18 +14,15 @@ class Memory extends Product {
 
 	// Constructor
 	public Memory() {
+		this.productType = "Memory";
 	}
 
 	public Memory(String attributes) {
+		this.productType = "Memory";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "Memory";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -75,6 +72,8 @@ class Memory extends Product {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

@@ -12,18 +12,15 @@ class HDD extends Storage {
 
 	// Constructor
 	public HDD() {
+		this.productType = "HDD";
 	}
 
 	public HDD(String attributes) {
+		this.productType = "HDD";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "HDD";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 		try {
@@ -51,6 +48,8 @@ class HDD extends Storage {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

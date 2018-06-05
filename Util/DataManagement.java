@@ -234,7 +234,7 @@ class DataManagement {
 	
 	void delete() {
 		UI.printDelete();
-		String name = UI.inputLine("Name: ");
+		String name = UI.inputLine("Name");
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
@@ -283,7 +283,52 @@ class DataManagement {
 	}
 
 	void sort() {
+		int select = UI.printSort();
 
+		String attributeName = "";
+		String attributeType = "";
+		JSONObject obj = new JSONObject();
+		obj.put("Mode", "Exist");
+		switch(select) {
+			case 1: attributeName = Str.capacity; attributeType = "String"; break;
+			case 2: attributeName = Str.certification; attributeType = "String"; break;
+			case 3: attributeName = Str.chipset; attributeType = "String"; break;
+			case 4: attributeName = Str.clockRate; attributeType = "Double"; break;
+			case 5: attributeName = Str.coreNumber; attributeType = "Long"; break;
+			case 6: attributeName = Str.cpuSocket; attributeType = "String"; break;
+			case 7: attributeName = Str.diskSize; attributeType = "String"; break;
+			case 8: attributeName = Str.fabrication; attributeType = "Long"; break;
+			case 9: attributeName = Str.formFactor; attributeType = "String"; break;
+			case 10: attributeName = Str.manufacturer; attributeType = "String"; break;
+			case 11: attributeName = Str.memoryType; attributeType = "String"; break;
+			case 12: attributeName = Str.name; attributeType = "String"; break;
+			case 13: attributeName = Str.price; attributeType = "Long"; break;
+			case 14: attributeName = Str.productType; attributeType = "String"; break;
+			case 15: attributeName = Str.quantity; attributeType = "Long"; break;
+			case 16: attributeName = Str.ratedOutput; attributeType = "Long"; break;
+			case 17: attributeName = Str.readSpeed; attributeType = "Long"; break;
+			case 18: attributeName = Str.rpm; attributeType = "Long"; break;
+			case 19: attributeName = Str.standard; attributeType = "String"; break;
+			case 20: attributeName = Str.tbw; attributeType = "Long"; break;
+			case 21: attributeName = Str.tdp; attributeType = "Long"; break;
+			case 22: attributeName = Str.writeSpeed; attributeType = "Long"; break;
+		}
+		obj.put("Attribute", attributeName);
+		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		// Quantity Handler
+		if(attributeName.equals(Str.quantity)) {
+			searched = new ArrayList<Integer>();
+			for(int i = 0; i < products.size(); i++) {
+				searched.add(i);
+			}
+		}
+
+		int sortDirc = UI.inputRange("Order (1.Ascending, 2.Descending)", 1, 2);
+		ArrayList<Integer> sorted = new ArrayList<Integer>();
+		try {
+			sorted = sortProduct(searched, attributeName, attributeType, sortDirc);
+		} catch(Exception e) {}
+		printProduct(sorted);
 	}
 
 	void list() {
@@ -292,6 +337,45 @@ class DataManagement {
 			require.add(i);
 		}
 		printProduct(require);
+	}
+
+	ArrayList<Integer> sortProduct(ArrayList<Integer> lists, String attributeName, String attributeType, int sortDirc) throws Exception {
+		if(sortDirc == 1) { // Asc
+			sortDirc =  1;
+		} else if(sortDirc == 2) { // Desc
+			sortDirc = -1;
+		}
+		for(int i = 1 ; i < lists.size() ; i++){
+			int key = lists.get(i);
+			String keyElemAtt = products.get(key).product.getAttribute("{\"Keys\":[\""+attributeName+"\"]}");
+			Object keyObj = ((JSONObject)(new JSONParser().parse(keyElemAtt))).get(attributeName);
+			if(attributeName.equals(Str.quantity)) {
+				keyObj = products.get(key).num;
+			}
+			int j;
+			for(j = i-1; j >= 0; j--) {
+				String jElemAtt = products.get(lists.get(j)).product.getAttribute("{\"Keys\":[\""+attributeName+"\"]}");
+				Object jObj = ((JSONObject)(new JSONParser().parse(jElemAtt))).get(attributeName);
+				if(attributeName.equals(Str.quantity)) {
+					jObj = products.get(lists.get(j)).num;
+				}
+				if(attributeType.equals("String")) {
+					if(((String)jObj).compareTo((String)keyObj)*sortDirc > 0) {
+						lists.set(j+1, lists.get(j));
+					} else break;
+				} else if(attributeType.equals("Long")) {
+					if(((Long)jObj)*sortDirc > ((Long)keyObj)*sortDirc) {
+						lists.set(j+1, lists.get(j));
+					} else break;
+				} else if(attributeType.equals("Double")) {
+					if(((Double)jObj)*sortDirc > ((Double)keyObj)*sortDirc) {
+						lists.set(j+1, lists.get(j));
+					} else break;
+				}
+			}
+			lists.set(j+1, key);
+		}
+		return lists;
 	}
 
 	void printProduct(int index) {
@@ -305,7 +389,7 @@ class DataManagement {
 		for(int i = 0; i < index.size(); i++) {
 			Product pd = products.get(index.get(i)).product;
 			Long qt = products.get(index.get(i)).num;
-			System.out.println(UI.content(String.format("%5d | %-12s | %-11s |%9d | %-16s | %4d", i+1, pd.name, pd.getProductType(), pd.price, pd.manufacturer, qt)));
+			System.out.println(UI.content(String.format("%5d | %-12s | %-11s |%9d | %-16s | %4d", i+1, pd.name, pd.productType, pd.price, pd.manufacturer, qt)));
 		}
 		System.out.println(UI.closeBox);
 	}

@@ -15,21 +15,19 @@ class Mainboard extends Product {
 
 	// Constructor
 	public Mainboard() {
+		this.productType = "Mainboard";
 		slots = new ArrayList<StringLongPair>();
 		ports = new ArrayList<StringLongPair>();
 	}
 
 	public Mainboard(String attributes) {
+		this.productType = "Mainboard";
 		slots = new ArrayList<StringLongPair>();
 		ports = new ArrayList<StringLongPair>();
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "Mainboard";
-	}
-
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -93,6 +91,8 @@ class Mainboard extends Product {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

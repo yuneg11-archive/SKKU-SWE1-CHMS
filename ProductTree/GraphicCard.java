@@ -12,20 +12,17 @@ class GraphicCard extends Graphic {
 
 	// Constructor
 	public GraphicCard() {
+		this.productType = "GraphicCard";
 		ports = new ArrayList<StringLongPair>();
 	}
 
 	public GraphicCard(String attributes) {
+		this.productType = "GraphicCard";
 		ports = new ArrayList<StringLongPair>();
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "GraphicCard";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -65,6 +62,8 @@ class GraphicCard extends Graphic {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

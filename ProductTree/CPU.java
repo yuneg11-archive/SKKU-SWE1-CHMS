@@ -11,18 +11,15 @@ class CPU extends Processor {
 
 	// Constructor
 	public CPU() {
+		this.productType = "CPU";
 	}
 
 	public CPU(String attributes) {
+		this.productType = "CPU";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "CPU";
-	}
-
-	
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
 
@@ -55,6 +52,8 @@ class CPU extends Processor {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Price"))

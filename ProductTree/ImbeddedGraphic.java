@@ -11,17 +11,15 @@ class ImbeddedGraphic extends Graphic {
 
 	// Constructor
 	public ImbeddedGraphic() {
+		this.productType = "ImbeddedGraphic";
 	}
 
 	public ImbeddedGraphic(String attributes) {
+		this.productType = "ImbeddedGraphic";
 		setAttribute(attributes);
 	}
 
 	// Setter & Getter
-	public String getProductType() {
-		return "ImbeddedGraphic";
-	}
-
 	public void insert(String excludeKeys) {
 		try {
 			JSONObject exclude = (JSONObject) (new JSONParser().parse(excludeKeys));
@@ -47,6 +45,8 @@ class ImbeddedGraphic extends Graphic {
 		/* attributes : {"Name":"i5-750", "Price":210000, "Manufacturer":"Intel"} */
 		try {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
+			if (obj.containsKey(Str.productType))
+				this.productType = (String) obj.get(Str.productType);
 			if (obj.containsKey("Name"))
 				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Manufacturer"))
