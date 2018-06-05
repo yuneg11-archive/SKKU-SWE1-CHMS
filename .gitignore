@@ -23,7 +23,9 @@
 hs_err_pid*
 .vscode/launch.json
 /bin/
-database.txt
 .project
 .idea
 .iml
+database.txt
+database1.txt
+temp

@@ -89,7 +89,6 @@ class Memory extends Product {
 			}
 
 			if (!keyArray.contains(Str.standard)) {
-				System.out.print(" Standard (\"DDR#\"): ");
 				System.out.println(UI.content("Standard: "+this.standard));
 			}
 		} catch (Exception exc) {

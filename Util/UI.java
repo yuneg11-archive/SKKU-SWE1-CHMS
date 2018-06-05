@@ -100,6 +100,18 @@ public class UI {
         System.out.println(subtitle("Enter product name to modify"));
         System.out.println(closeBox);
     }
+    static int printSearch() {
+        System.out.println(title("Search"));
+        System.out.println(subtitle("Select attribute to search"));
+        System.out.println(subcontent(" 1. Capacity      2. Certification  3. Chipset         4. ClockRate"));
+        System.out.println(subcontent(" 5. Core Number   6. CPU Socket     7. DiskSize        8. Fabrication"));
+        System.out.println(subcontent(" 9. Form Factor  10. Manufacturer  11. Memory Type    12. Name"));
+        System.out.println(subcontent("13. Price        14. Product Type  15. Quantity       16. Rated Output"));
+        System.out.println(subcontent("17. Read Speed   18. RPM           19. Memory Standard   20. TBW"));
+        System.out.println(subcontent("21. TDP          22. Write Speed"));
+        System.out.println(closeBox);
+        return inputRange(1, 22);
+    }
     static int printSort() {
         System.out.println(title("Sort"));
         System.out.println(subtitle("Select attribute to sort"));
@@ -155,7 +167,25 @@ public class UI {
             try {
                 System.out.print(prompt(msg+": "));
                 value = input.nextLong();
-                break;
+                if(value >= 0) break;
+                else System.out.println(prompt("Invalid number"));
+            } catch(InputMismatchException ex) {
+                System.out.println(prompt("Invalid input"));
+                input.nextLine();
+            }
+        } while(true);
+        return value;
+    }
+
+    static Double inputDouble(String msg) {
+        Scanner input = new Scanner(System.in);
+        Double value;
+        do {
+            try {
+                System.out.print(prompt(msg+": "));
+                value = input.nextDouble();
+                if(value >= 0) break;
+                else System.out.println(prompt("Invalid number"));
             } catch(InputMismatchException ex) {
                 System.out.println(prompt("Invalid input"));
                 input.nextLine();

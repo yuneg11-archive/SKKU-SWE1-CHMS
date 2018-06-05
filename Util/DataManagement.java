@@ -219,20 +219,6 @@ class DataManagement {
 			return null;
     	}
 	}
-    
-    void search() {
-		Scanner s = new Scanner(System.in);
-        
-        int type;
-        System.out.println("===============SEARCH===============");
-        System.out.println("-Filter");
-        System.out.println("1. Name \t2. Product Type \t3. Manufacturer");
-        System.out.println("4. Graphic Card \t5. Power Supply");
-        System.out.println("6. SSD \t7. HDD \t\t8. Case");
-        System.out.println("9. Expansion Card");
-        
-        //s.close();
-	}
 	
 	void delete() {
 		UI.printDelete();
@@ -284,37 +270,66 @@ class DataManagement {
 		}
 	}
 
+	void search() {
+		int select = UI.printSearch();
+
+		String attributeName = Str.getAttributeName(select);
+		String attributeType = Str.getAttributeType(select);;
+		JSONObject obj = new JSONObject();
+		int mode = 0;
+
+		if(attributeType.equals("String")) {
+			mode = UI.inputRange("Mode (1.Exist, 2.Match)", 1, 2);
+		} else if(attributeType.equals("Double") || attributeType.equals("Long")) {
+			mode = UI.inputRange("Mode (1.Exist, 2.Match, 3.Range)", 1, 3);
+		}
+		if(mode == 1) {
+			obj.put("Mode", "Exist");
+		} else if(mode == 2) {
+			obj.put("Mode", "Match");
+			Object value = null;
+			if(attributeType.equals("String")) {
+				value = UI.inputLine("Value");
+			} else if(attributeType.equals("Long")) {
+				value = UI.inputLong("Value");
+			} else if(attributeType.equals("Double")) {
+				value = UI.inputDouble("Value");
+			}
+			obj.put("Value", value);
+		} else if(mode == 3) {
+			obj.put("Mode", "Range");
+			int rangeMode = UI.inputRange("Range Mode (1.<=, 2.>=, 3.Both)", 1, 3);
+			Object upperBound = Double.MAX_VALUE;
+			Object lowerBound = 0D;
+			if(rangeMode == 1 || rangeMode == 3) {
+				if(attributeType.equals("Long")) {
+					upperBound = UI.inputLong("Upper bound");
+				} else if(attributeType.equals("Double")) {
+					upperBound = UI.inputDouble("Upper bound");
+				}
+			}
+			if(rangeMode == 2 || rangeMode == 3) {
+				if(attributeType.equals("Long")) {
+					upperBound = UI.inputLong("Lower bound");
+				} else if(attributeType.equals("Double")) {
+					upperBound = UI.inputDouble("Lower bound");
+				}
+			}
+			obj.put("LowerBound", lowerBound);
+			obj.put("UpperBound", upperBound);
+		}
+		obj.put("Attribute", attributeName);
+		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		printProduct(searched);
+	}
+
 	void sort() {
 		int select = UI.printSort();
 
-		String attributeName = "";
-		String attributeType = "";
+		String attributeName = Str.getAttributeName(select);
+		String attributeType = Str.getAttributeType(select);
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Exist");
-		switch(select) {
-			case 1: attributeName = Str.capacity; attributeType = "String"; break;
-			case 2: attributeName = Str.certification; attributeType = "String"; break;
-			case 3: attributeName = Str.chipset; attributeType = "String"; break;
-			case 4: attributeName = Str.clockRate; attributeType = "Double"; break;
-			case 5: attributeName = Str.coreNumber; attributeType = "Long"; break;
-			case 6: attributeName = Str.cpuSocket; attributeType = "String"; break;
-			case 7: attributeName = Str.diskSize; attributeType = "String"; break;
-			case 8: attributeName = Str.fabrication; attributeType = "Long"; break;
-			case 9: attributeName = Str.formFactor; attributeType = "String"; break;
-			case 10: attributeName = Str.manufacturer; attributeType = "String"; break;
-			case 11: attributeName = Str.memoryType; attributeType = "String"; break;
-			case 12: attributeName = Str.name; attributeType = "String"; break;
-			case 13: attributeName = Str.price; attributeType = "Long"; break;
-			case 14: attributeName = Str.productType; attributeType = "String"; break;
-			case 15: attributeName = Str.quantity; attributeType = "Long"; break;
-			case 16: attributeName = Str.ratedOutput; attributeType = "Long"; break;
-			case 17: attributeName = Str.readSpeed; attributeType = "Long"; break;
-			case 18: attributeName = Str.rpm; attributeType = "Long"; break;
-			case 19: attributeName = Str.standard; attributeType = "String"; break;
-			case 20: attributeName = Str.tbw; attributeType = "Long"; break;
-			case 21: attributeName = Str.tdp; attributeType = "Long"; break;
-			case 22: attributeName = Str.writeSpeed; attributeType = "Long"; break;
-		}
 		obj.put("Attribute", attributeName);
 		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
 		// Quantity Handler
