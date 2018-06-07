@@ -65,16 +65,16 @@ class ImbeddedGraphic extends Graphic {
 			JSONObject obj = (JSONObject) (new JSONParser().parse(attributes));
 			if (obj.containsKey(Str.productType))
 				this.productType = (String) obj.get(Str.productType);
-			if (obj.containsKey("Name"))
-				this.name = (String) obj.get("Name");
 			if (obj.containsKey("Manufacturer"))
 				this.manufacturer = (String) obj.get("Manufacturer");
-			if (obj.containsKey("CoreNumber"))
-				this.coreNumber = (Long) obj.get("CoreNumber");
+			if (obj.containsKey(Str.coreNumber))
+				this.coreNumber = (Long) obj.get(Str.coreNumber);
+			if (obj.containsKey(Str.clockRate))
+				this.clockRate = (Double) obj.get(Str.clockRate);
+			if (obj.containsKey(Str.chipset))
+				this.chipset = (String) obj.get(Str.chipset);
 			if (obj.containsKey("Fabrication"))
 				this.fabrication = (Long) obj.get("Fabrication");
-			if (obj.containsKey("TDP"))
-				this.tdp = (Long) obj.get("TDP");
 			if (obj.containsKey("SystemMemoryAllocation"))
 				this.systemMemoryAlloc = (Long) obj.get("SystemMemoryAllocation");
 		} catch (Exception exc) {
@@ -93,10 +93,6 @@ class ImbeddedGraphic extends Graphic {
 				case "ProductType":
 					obj.put(Str.productType, "ImbeddedGraphic");
 					break;
-				case "Name":
-					if (this.name != null)
-						obj.put("Name", this.name);
-					break;
 				case "Manufacturer":
 					if (this.manufacturer != null)
 						obj.put("Manufacturer", this.manufacturer);
@@ -105,13 +101,17 @@ class ImbeddedGraphic extends Graphic {
 					if (this.coreNumber != null)
 						obj.put("CoreNumber", this.coreNumber);
 					break;
+				case "ClockRate":
+					if (this.coreNumber != null)
+						obj.put(Str.clockRate, this.coreNumber);
+					break;
 				case "Fabrication":
 					if (this.fabrication != null)
 						obj.put("Fabrication", this.fabrication);
 					break;
-				case "TDP":
+				case "Chipset":
 					if (this.tdp != null)
-						obj.put("TDP", this.tdp);
+						obj.put(Str.chipset, this.tdp);
 					break;
 				case "SystemMemoryAllocation":
 					if (this.systemMemoryAlloc != null)
@@ -130,11 +130,11 @@ class ImbeddedGraphic extends Graphic {
 		JSONObject obj = new JSONObject();
 		JSONArray keyArray = new JSONArray();
 		keyArray.add(Str.productType);
-		keyArray.add(Str.name);
 		keyArray.add(Str.manufacturer);
 		keyArray.add(Str.clockRate);
 		keyArray.add(Str.fabrication);
-		keyArray.add(Str.tdp);
+		keyArray.add(Str.coreNumber);
+		keyArray.add(Str.chipset);
 		keyArray.add(Str.systemMemoryAlloc);
 		obj.put("Keys", keyArray);
 		try {
