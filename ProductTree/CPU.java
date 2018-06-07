@@ -21,27 +21,24 @@ class CPU extends Processor {
 
 	// Setter & Getter
 	public void insert(String excludeKeys) {
-					super.insert(excludeKeys);
-
-					try {
-						JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
-						JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-						Scanner s = new Scanner(System.in);
-
-						if (!keyArray.contains(Str.cpuSocket)) {
-							System.out.print(" CPU Socket: ");
-							this.cpuSocket = s.nextLine();
-						}
-
-						if (!keyArray.contains(Str.imbeddedGraphic)) {
-							boolean answer = UI.inputYesNo(" Has Imbedded Graphic? (Y/N)");
-							if (answer) {
-								System.out.println(" ==========Imbedded Graphic==========");
-								ImbeddedGraphic imb = new ImbeddedGraphic();
-								imb.insert("{\"ExcludeKey\":[]}");
-								this.imbeddedGraphic = imb;
-								System.out.println(" ====================================");
-							}
+		super.insert(excludeKeys);
+		try {
+			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
+			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
+			Scanner s = new Scanner(System.in);
+			if (!keyArray.contains(Str.cpuSocket)) {
+				System.out.print(" CPU Socket: ");
+				this.cpuSocket = s.nextLine();
+			}
+			if (!keyArray.contains(Str.imbeddedGraphic)) {
+				boolean answer = UI.inputYesNo(" Has Imbedded Graphic? (Y/N)");
+				if (answer) {
+					System.out.println(" ==========Imbedded Graphic==========");
+					ImbeddedGraphic imb = new ImbeddedGraphic();
+					imb.insert("{\"ExcludeKey\":[]}");
+					this.imbeddedGraphic = imb;
+					System.out.println(" ====================================");
+				}
 			}
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
@@ -171,7 +168,5 @@ class CPU extends Processor {
 			System.out.println("Unexpected error occurred");
 			return null;
 		}
-
 	}
-
 }

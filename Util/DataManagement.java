@@ -4,7 +4,7 @@ import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
 class DataManagement {
-    ArrayList<ProductLongPair> products;
+    private ArrayList<ProductLongPair> products;
 
     DataManagement(ArrayList<ProductLongPair> products) {
         this.products = products;
@@ -13,8 +13,6 @@ class DataManagement {
     ArrayList<ProductLongPair> getProducts() {
         return products;
     }
-
-
 
     void insert() {
 		JSONObject obj = new JSONObject();
@@ -30,7 +28,7 @@ class DataManagement {
     		CPU cpu = new CPU();
 			cpu.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", cpu.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(cpu, quantity));
@@ -46,7 +44,7 @@ class DataManagement {
     		Mainboard mb = new Mainboard();
 			mb.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", mb.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(mb, quantity));
@@ -62,7 +60,7 @@ class DataManagement {
     		Memory mem = new Memory();
 			mem.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", mem.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(mem, quantity));
@@ -78,7 +76,7 @@ class DataManagement {
     		GraphicCard graphic = new GraphicCard();
 			graphic.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", graphic.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(graphic, quantity));
@@ -94,7 +92,7 @@ class DataManagement {
     		PowerSupply ps = new PowerSupply();
 			ps.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", ps.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(ps, quantity));
@@ -110,7 +108,7 @@ class DataManagement {
     		SSD ssd = new SSD();
 			ssd.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", ssd.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(ssd, quantity));
@@ -126,7 +124,7 @@ class DataManagement {
     		HDD hdd = new HDD();
 			hdd.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", hdd.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(hdd, quantity));
@@ -142,7 +140,7 @@ class DataManagement {
     		Case c = new Case();
 			c.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", c.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(c, quantity));
@@ -158,7 +156,7 @@ class DataManagement {
     		ExpansionCard expc = new ExpansionCard();
 			expc.insert("{\"ExcludeKey\":[]}");
 			obj.put("Value", expc.toJSONObject().get("Name"));
-			searched = searchProductCondition(obj.toJSONString());
+			searched = searchProduct(obj.toJSONString());
 			quantity = UI.inputLong("Quantity");
 			if(searched.size() == 0) {	//new product
 				products.add(new ProductLongPair(expc, quantity));
@@ -173,7 +171,7 @@ class DataManagement {
 		//s.close();
 	}
 
-	ArrayList<Integer> searchProductCondition(String conditionStr) {
+	ArrayList<Integer> searchProduct(String conditionStr) {
 		/* conditions : {"Mode":"Exist", "Attribute":"Price"} */
 		/* conditions : {"Mode":"Match", "Attribute":"Name", "Value":"i5"} */
 		/* conditions : {"Mode":"Range", "Attribute":"Price", "LowerBound":10000, "UpperBound":50000}]} */
@@ -223,7 +221,7 @@ class DataManagement {
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
 		obj.put("Value", name);
-		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
 		if(searched.size() == 0) {
 			System.out.println(" Product \"" + name + "\" doesn't exist.");
 		} else {
@@ -245,7 +243,7 @@ class DataManagement {
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
 		obj.put("Value", name);
-		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
 		if(searched.size() == 0) {
 			System.out.println("Product \"" + name + "\" doesn't exist.");
 		} else {
@@ -315,7 +313,7 @@ class DataManagement {
 			obj.put("UpperBound", upperBound);
 		}
 		obj.put("Attribute", attributeName);
-		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
 		printProduct(searched);
 	}
 
@@ -327,7 +325,7 @@ class DataManagement {
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Exist");
 		obj.put("Attribute", attributeName);
-		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
 		// Quantity Handler
 		if(attributeName.equals(Str.quantity)) {
 			searched = new ArrayList<Integer>();

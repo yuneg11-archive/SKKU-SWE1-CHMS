@@ -7,9 +7,6 @@ public class UI {
     static final String openBox    = "╔═════════════════════════════════════════════════════════════════════════╗";
     static final String closeBox   = "╚═════════════════════════════════════════════════════════════════════════╝";
     static final String seperatingLine = "╟─────────────────────────────────────────────────────────────────────────╢";
-    static void print(int level, String msg) {
-
-    }
 
     static String title(String msg) {
         String title = "";

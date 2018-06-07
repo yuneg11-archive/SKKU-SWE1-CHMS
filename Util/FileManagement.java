@@ -18,7 +18,7 @@ class FileManagement {
     }
 
     // Load Database 
-    ArrayList<ProductLongPair> loadDatabase() {
+    public ArrayList<ProductLongPair> loadDatabase() {
         ArrayList<ProductLongPair> products = new ArrayList<ProductLongPair>();
         
         try {
@@ -26,7 +26,7 @@ class FileManagement {
             String line = br.readLine();
             while(line != null) {
                 /*Debug*///System.out.println(line);
-                products.add(StringtoProductQuantity(line));
+                products.add(stringToProductQuantity(line));
                 line = br.readLine();
             }
             br.close();
@@ -51,7 +51,7 @@ class FileManagement {
     }
 
     // Save Database
-    void saveDatabase(ArrayList<ProductLongPair> products) {
+    public void saveDatabase(ArrayList<ProductLongPair> products) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(databaseFileName));
             for(ProductLongPair productAndQuantity : products) {
@@ -67,7 +67,7 @@ class FileManagement {
         }
     }
 
-    ProductLongPair StringtoProductQuantity(String str) throws Exception {
+    ProductLongPair stringToProductQuantity(String str) throws Exception {
         JSONObject productAndQuantity = (JSONObject)(new JSONParser().parse(str));
         JSONObject obj = (JSONObject)productAndQuantity.get("Product");
         Long quantity = (Long)productAndQuantity.get("Quantity");
