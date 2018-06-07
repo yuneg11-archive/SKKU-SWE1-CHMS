@@ -1,7 +1,4 @@
 import JSON.JSONObject;
-
-import java.util.Scanner;
-
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -25,43 +22,21 @@ class Memory extends Product {
 	// Setter & Getter
 	public void insert(String excludeKeys) {
 		super.insert(excludeKeys);
-
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.capacity)) {
-				System.out.print(" Capacity (MB): ");
-				this.capacity = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.capacity))
+				this.capacity = UI.inputLong("Capacity (MB)");
 
-			if (!keyArray.contains(Str.clockRate)) {
-				System.out.print(" Clock Rate (MHz): ");
-				this.clockRate = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.clockRate))
+				this.clockRate = UI.inputLong("Clock Rate (MHz)");
 
-			if (!keyArray.contains(Str.errorCheck)) {
-				while (true) {
-					System.out.print(" Error Check (Y/N): ");
-					String answer = s.nextLine();
-					if (answer.compareTo("Y") == 0) {
-						this.errorCheck = true;
-						break;
-					} else if (answer.compareTo("N") == 0) {
-						this.errorCheck = false;
-						break;
-					} else
-						System.out.println("Invalid Input");
-				}
-			}
+			if (!keyArray.contains(Str.errorCheck))
+				this.errorCheck = UI.inputYesNo("Error Check (Y/N)");
 
-			if (!keyArray.contains(Str.standard)) {
-				System.out.print(" Standard (\"DDR#\"): ");
-				this.standard = s.nextLine();
-			}
+			if (!keyArray.contains(Str.standard))
+				this.standard = UI.inputLine("Standard (\"DDR#\")");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

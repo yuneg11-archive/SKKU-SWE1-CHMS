@@ -1,7 +1,4 @@
 import JSON.JSONObject;
-
-import java.util.Scanner;
-
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -29,13 +26,9 @@ class ImbeddedGraphic extends Graphic {
 			keyArray.add(Str.name);
 			keyArray.add(Str.tdp);
 			super.insert(exclude.toJSONString());
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.systemMemoryAlloc)) {
-				System.out.print(" System Memory Allocation (MB): ");
-				this.systemMemoryAlloc = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.systemMemoryAlloc))
+				this.systemMemoryAlloc = UI.inputLong("System Memory Allocation (MB)");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

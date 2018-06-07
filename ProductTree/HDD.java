@@ -1,7 +1,4 @@
 import JSON.JSONObject;
-
-import java.util.Scanner;
-
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
@@ -26,18 +23,12 @@ class HDD extends Storage {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.diskSize)) {
-				System.out.print(" Disk Size (inch): ");
-				this.diskSize = s.nextLine();
-			}
+			if (!keyArray.contains(Str.diskSize))
+				this.diskSize = UI.inputLine("Disk Size (inch)");
 
-			if (!keyArray.contains(Str.rpm)) {
-				System.out.print(" RPM: ");
-				this.rpm = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.rpm))
+				this.rpm = UI.inputLong("RPM");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

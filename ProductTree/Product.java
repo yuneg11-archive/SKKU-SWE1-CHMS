@@ -1,7 +1,6 @@
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
-import java.util.Scanner;
 
 abstract class Product {
     // Variable
@@ -22,26 +21,18 @@ abstract class Product {
     }
 
     public void insert(String excludeKeys) {
-        Scanner s = new Scanner(System.in);
         try {
             JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
             JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 
-            if (!keyArray.contains(Str.name)) {
-                System.out.print(" Name (Name is unique): ");
-                this.name = s.nextLine();
-            }
+            if (!keyArray.contains(Str.name))
+                this.name = UI.inputLine("Name (Used as ID)");
 
-            if (!keyArray.contains(Str.price)) {
-                System.out.print(" Price (Won): ");
-                this.price = s.nextLong();
-                s.nextLine();
-            }
+            if (!keyArray.contains(Str.price))
+                this.price = UI.inputLong("Price (Won)");
 
-            if (!keyArray.contains(Str.manufacturer)) {
-                System.out.print(" Manufacturer: ");
-                this.manufacturer = s.nextLine();
-            }
+            if (!keyArray.contains(Str.manufacturer))
+                this.manufacturer = UI.inputLine("Manufacturer");
         } catch (Exception exc) {
             System.out.println("Unexpected error occurred");
         }

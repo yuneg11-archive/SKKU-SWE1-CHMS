@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -25,18 +24,12 @@ class SSD extends Storage {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.memoryType)) {
-				System.out.print(" Flash Memory Type: ");
-				this.memoryType = s.nextLine();
-			}
+			if (!keyArray.contains(Str.memoryType))
+				this.memoryType = UI.inputLine("Flash Memory Type");
 
-			if (!keyArray.contains(Str.tbw)) {
-				System.out.print(" TBW (Tera Byte Written): ");
-				this.tbw = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.tbw))
+				this.tbw = UI.inputLong("TBW");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

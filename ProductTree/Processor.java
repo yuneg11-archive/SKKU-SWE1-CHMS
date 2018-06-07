@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -16,28 +15,18 @@ abstract class Processor extends Product {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.coreNumber)) {
-				System.out.print(" Core Number: ");
-				this.coreNumber = s.nextLong();
-			}
+			if (!keyArray.contains(Str.coreNumber))
+				this.coreNumber = UI.inputLong("Core Number");
 
-			if (!keyArray.contains(Str.clockRate)) {
-				System.out.print(" Clock Rate (GHz): ");
-				this.clockRate = s.nextDouble();
-			}
+			if (!keyArray.contains(Str.clockRate))
+				this.clockRate = UI.inputDouble("Clock Rate (GHz)");
 
-			if (!keyArray.contains(Str.fabrication)) {
-				System.out.print(" Fabrication (nm): ");
-				this.fabrication = s.nextLong();
-			}
+			if (!keyArray.contains(Str.fabrication))
+				this.fabrication = UI.inputLong("Fabrication (nm)");
 
-			if (!keyArray.contains(Str.tdp)) {
-				System.out.print(" TDP (W): ");
-				this.tdp = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.tdp))
+				this.tdp = UI.inputLong("TDP (W)");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

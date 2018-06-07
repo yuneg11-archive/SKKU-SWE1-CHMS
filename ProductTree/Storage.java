@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -16,28 +15,18 @@ abstract class Storage extends Product {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.capacity)) {
-				System.out.print(" Capacity (GB): ");
-				this.capacity = s.nextLong();
-			}
+			if (!keyArray.contains(Str.capacity))
+				this.capacity = UI.inputLong("Capacity (GB)");
 
-			if (!keyArray.contains(Str.readSpeed)) {
-				System.out.print(" Read Speed (Mb/s): ");
-				this.readSpeed = s.nextLong();
-			}
+			if (!keyArray.contains(Str.readSpeed))
+				this.readSpeed = UI.inputLong("Read Speed (Mb/s)");
 
-			if (!keyArray.contains(Str.writeSpeed)) {
-				System.out.print(" Write Speed (Mb/s): ");
-				this.writeSpeed = s.nextLong();
-				s.nextLine();
-			}
+			if (!keyArray.contains(Str.writeSpeed))
+				this.writeSpeed = UI.inputLong("Write Speed (Mb/s)");;
 
-			if (!keyArray.contains(Str.slot)) {
-				System.out.print(" Slot: ");
-				this.slot = s.nextLine();
-			}
+			if (!keyArray.contains(Str.slot))
+				this.slot = UI.inputLine("Slot");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}
