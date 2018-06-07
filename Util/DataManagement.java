@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
@@ -21,11 +20,8 @@ class DataManagement {
 		JSONObject obj = new JSONObject();
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
-
-        Scanner s = new Scanner(System.in);
         
         int type = UI.printInsert();
-        
 		Long quantity;
 		ArrayList<Integer> searched= new ArrayList<Integer>();
         switch(type) {
@@ -227,7 +223,7 @@ class DataManagement {
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
 		obj.put("Value", name);
-		ArrayList searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
 		if(searched.size() == 0) {
 			System.out.println(" Product \"" + name + "\" doesn't exist.");
 		} else {
@@ -249,7 +245,7 @@ class DataManagement {
 		obj.put("Mode", "Match");
 		obj.put("Attribute", "Name");
 		obj.put("Value", name);
-		ArrayList searched = searchProductCondition(obj.toJSONString());
+		ArrayList<Integer> searched = searchProductCondition(obj.toJSONString());
 		if(searched.size() == 0) {
 			System.out.println("Product \"" + name + "\" doesn't exist.");
 		} else {
