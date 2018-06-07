@@ -198,18 +198,18 @@ class DataManagement {
 
 				if(value == null) { // Attribute doesn't exist in target product
 					productIndex.remove(productIndex.get(i));
-				}
-
-				if(((String)condition.get("Mode")).equals("Match")) {
-					if(!value.toString().equals(condition.get("Value").toString())) {
-						productIndex.remove(productIndex.get(i));
-					}
-				} else if(((String)condition.get("Mode")).equals("Range")) {
-					Double doubleValue = Double.parseDouble(value.toString());
-					Double lowerBound = Double.parseDouble(condition.get("LowerBound").toString());
-					Double upperBound = Double.parseDouble(condition.get("UpperBound").toString());
-					if(doubleValue < lowerBound || doubleValue > upperBound) {
-						productIndex.remove(productIndex.get(i));
+				} else {
+					if(((String)condition.get("Mode")).equals("Match")) {
+						if(!value.toString().equals(condition.get("Value").toString())) {
+							productIndex.remove(productIndex.get(i));
+						}
+					} else if(((String)condition.get("Mode")).equals("Range")) {
+						Double doubleValue = Double.parseDouble(value.toString());
+						Double lowerBound = Double.parseDouble(condition.get("LowerBound").toString());
+						Double upperBound = Double.parseDouble(condition.get("UpperBound").toString());
+						if(doubleValue < lowerBound || doubleValue > upperBound) {
+							productIndex.remove(productIndex.get(i));
+						}
 					}
 				}
 			}
@@ -401,17 +401,23 @@ class DataManagement {
 		printProduct(al);
 	}
 	void printProduct(ArrayList<Integer> index) {
-    	int size = index.size();
-        System.out.println(UI.title("Product List"));
-        for (int i = 0; i < size; i++) {
-			Product pd = products.get(index.get(i)).product;
-            Long qt = products.get(index.get(i)).num;
+		int size;
+		if(index == null) size = 0;
+    	else size = index.size();
+		System.out.println(UI.title("Product List"));
+		if(size == 0) {
+			System.out.println(UI.content("No such product"));
+		} else {
+    	    for (int i = 0; i < size; i++) {
+				Product pd = products.get(index.get(i)).product;
+    	        Long qt = products.get(index.get(i)).num;
 
-            System.out.println(UI.subcontent("< Product #"+String.valueOf(i+1)+" - "+pd.getProductType()+" > : "+String.valueOf(qt)+"ea"));
-			pd.print("{\"ExcludeKey\":[]}");
-			if(i!=size-1) //not a last product
-				System.out.println(UI.seperatingLine);
-        }
+    	        System.out.println(UI.subcontent("< Product #"+String.valueOf(i+1)+" - "+pd.getProductType()+" > : "+String.valueOf(qt)+"ea"));
+				pd.print("{\"ExcludeKey\":[]}");
+				if(i!=size-1) //not a last product
+					System.out.println(UI.seperatingLine);
+			}
+		}
 		System.out.println(UI.closeBox);
 	}
 }

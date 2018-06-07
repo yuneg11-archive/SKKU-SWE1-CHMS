@@ -21,8 +21,8 @@ public class CHMS {
             }
         } while(!exit);
 
-        System.out.println(UI.prompt("Program over."));
         fm.saveDatabase(dm.getProducts());
         System.out.println(UI.prompt("Database Saved."));
+        System.out.println(UI.prompt("Program over."));
     }
 }

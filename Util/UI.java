@@ -80,12 +80,12 @@ public class UI {
     }
 
     static int printInsert() {
-        System.out.println("===============INSERT===============");
-        System.out.println("-Type");
-        System.out.println("1. CPU \t2. Mainboard \t3. Memory");
-        System.out.println("4. Graphic Card \t5. Power Supply");
-        System.out.println("6. SSD \t7. HDD \t\t8. Case");
-        System.out.println("9. Expansion Card");
+        System.out.println(title("Insert"));
+        System.out.println(subtitle("Type"));
+        System.out.println(subcontent("1. CPU              2. Mainboard     3. Memory     4. Graphic Card"));
+        System.out.println(subcontent("5. Power Supply     6. SSD           7. HDD        8. Case"));
+        System.out.println(subcontent("9. Expansion Card"));
+        System.out.println(closeBox);
         return inputRange(1, 9);
     }
 
