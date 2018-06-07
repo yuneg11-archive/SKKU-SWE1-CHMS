@@ -26,12 +26,8 @@ class Case extends Product {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
 
-			Scanner s = new Scanner(System.in);
-
-			if (!keyArray.contains(Str.formFactor)) {
-				System.out.print(" Form Factor: ");
-				this.formFactor = s.nextLine();
-			}
+			if (!keyArray.contains(Str.formFactor))
+				this.formFactor=UI.inputLine("Form Factor");
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}

@@ -34,50 +34,33 @@ class Mainboard extends Product {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 			long types;
 			String name;
 			long num;
 
-			if (!keyArray.contains(Str.chipset)) {
-				System.out.print(" Chipset: ");
-				this.chipset = s.nextLine();
-			}
+			if (!keyArray.contains(Str.chipset))
+				this.chipset = UI.inputLine("Chipset");
 
-			if (!keyArray.contains(Str.formFactor)) {
-				System.out.print(" Form Factor: ");
-				this.formFactor = s.nextLine();
-			}
+			if (!keyArray.contains(Str.formFactor))
+				this.formFactor = UI.inputLine("Form Factor");
 
-			if (!keyArray.contains(Str.cpuSocket)) {
-				System.out.print(" CPU Socket: ");
-				this.cpuSocket = s.nextLine();
-			}
+			if (!keyArray.contains(Str.cpuSocket))
+				this.cpuSocket = UI.inputLine("CPU Socket");
 
 			if (!keyArray.contains(Str.slot)) {
-				System.out.print(" How many types of slots?: ");
-				types = s.nextLong();
-				s.nextLine();
+				types = UI.inputLong("How many types of slots?");
 				for (int i = 0; i < types; i++) {
-					System.out.printf(" Name of slot type %d: ", i + 1);
-					name = s.nextLine();
-					System.out.printf(" Number of slot type %d: ", i + 1);
-					num = s.nextLong();
-					s.nextLine();
+					name = UI.inputLine("Name of slot type "+String.valueOf(i+1));
+					num = UI.inputLong("Number of slot type "+String.valueOf(i+1));
 					this.slots.add(new StringLongPair(name, num));
 				}
 			}
 
 			if (!keyArray.contains(Str.port)) {
-				System.out.print(" How many types of ports?: ");
-				types = s.nextLong();
-				s.nextLine();
+				types = UI.inputLong("How many types of ports?");
 				for (int i = 0; i < types; i++) {
-					System.out.printf(" Name of port type %d: ", i + 1);
-					name = s.nextLine();
-					System.out.printf(" Number of port type %d: ", i + 1);
-					num = s.nextLong();
-					s.nextLine();
+					name = UI.inputLine("Name of port type "+String.valueOf(i+1));
+					num = UI.inputLong("Number of port type "+String.valueOf(i+1));
 					this.ports.add(new StringLongPair(name, num));
 				}
 			}

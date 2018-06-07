@@ -29,26 +29,18 @@ class GraphicCard extends Graphic {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 			long types;
 			String name;
 			long num;
 
-			if (!keyArray.contains(Str.slot)) {
-				System.out.print(" Slot: ");
-				this.slot = s.nextLine();
-			}
+			if (!keyArray.contains(Str.slot))
+				this.slot = UI.inputLine("Slot");
 
 			if (!keyArray.contains(Str.port)) {
-				System.out.print(" How many types of ports?: ");
-				types = s.nextLong();
-				s.nextLine();
+				types = UI.inputLong("How many types of ports?");
 				for (int i = 0; i < types; i++) {
-					System.out.printf(" Name of port type %d: ", i + 1);
-					name = s.nextLine();
-					System.out.printf(" Number of port type %d: ", i + 1);
-					num = s.nextLong();
-					s.nextLine();
+					name = UI.inputLine("Name of port type "+String.valueOf(i+1));
+					num = UI.inputLong("Number of port type "+String.valueOf(i+1));
 					this.ports.add(new StringLongPair(name, num));
 				}
 			}

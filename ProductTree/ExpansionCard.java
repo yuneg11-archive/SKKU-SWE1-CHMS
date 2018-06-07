@@ -27,17 +27,12 @@ class ExpansionCard extends Product {
 		try {
 			JSONObject required = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) required.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.slot)) {
-				System.out.print(" Slot: ");
-				this.slot = s.nextLine();
-			}
+			if (!keyArray.contains(Str.slot))
+				this.slot = UI.inputLine("Slot");
 
-			if (!keyArray.contains(Str.function)) {
-				System.out.print(" Function: ");
-				this.function = s.nextLine();
-			}
+			if (!keyArray.contains(Str.function))
+				this.function = UI.inputLine("Function");
 
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");

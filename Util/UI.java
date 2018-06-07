@@ -7,6 +7,22 @@ public class UI {
     static final String openBox    = "╔═════════════════════════════════════════════════════════════════════════╗";
     static final String closeBox   = "╚═════════════════════════════════════════════════════════════════════════╝";
     static final String seperatingLine = "╟─────────────────────────────────────────────────────────────────────────╢";
+    static final String inputEndLine   = "═══════════════════════════════════════════════════════════════════════════";
+
+    static String insertTitle(String msg) {
+        String title = "";
+        int msgLen = msg.length()+2;
+        title += "═";
+        for(int i = 0; i < (width-msgLen)/2; i++) {
+            title += "═";
+        }
+        title += (" " + msg + " ");
+        for(int i = 0; i < (width-msgLen)-((width-msgLen)/2); i++) {
+            title += "═";
+        }
+        title += "═";
+        return title;
+    }
 
     static String title(String msg) {
         String title = "";
@@ -76,10 +92,10 @@ public class UI {
 
     static int printInsert() {
         System.out.println(title("Insert"));
-        System.out.println(subtitle("Type"));
-        System.out.println(subcontent("1. CPU              2. Mainboard     3. Memory     4. Graphic Card"));
-        System.out.println(subcontent("5. Power Supply     6. SSD           7. HDD        8. Case"));
-        System.out.println(subcontent("9. Expansion Card"));
+        System.out.println(subtitle("Product Type"));
+        System.out.println(subcontent(" 1. CPU           2. Mainboard      3. Memory          4. Graphic Card"));
+        System.out.println(subcontent(" 5. Power Supply  6. SSD            7. HDD             8. Case"));
+        System.out.println(subcontent(" 9. Expansion Card"));
         System.out.println(closeBox);
         return inputRange(1, 9);
     }

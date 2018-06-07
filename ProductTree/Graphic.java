@@ -14,22 +14,19 @@ abstract class Graphic extends Processor {
 		try {
 			JSONObject exclude = (JSONObject) (new JSONParser().parse(excludeKeys));
 			JSONArray keyArray = (JSONArray) exclude.get("ExcludeKey");
-			Scanner s = new Scanner(System.in);
 
-			if (!keyArray.contains(Str.chipset)) {
-				System.out.print(" Chipset: ");
-				this.chipset = s.nextLine();
-			}
+			if (!keyArray.contains(Str.chipset))
+				this.chipset = UI.inputLine("Chipset");
 
 			if (!keyArray.contains(Str.memory)) {
-				System.out.println(" ==========Graphic Memory==========");
+				System.out.println(UI.insertTitle("Graphic Memory"));
 				Memory mem = new Memory();
 				keyArray.add(Str.price);
 				keyArray.add(Str.name);
 				keyArray.add(Str.errorCheck);
 				mem.insert(exclude.toJSONString());
 				this.memory = mem;
-				System.out.println(" ==================================");
+				System.out.println(UI.inputEndLine);
 			}
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
