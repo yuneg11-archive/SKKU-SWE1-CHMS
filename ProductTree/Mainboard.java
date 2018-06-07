@@ -141,8 +141,8 @@ class Mainboard extends Product {
 				this.chipset = (String) obj.get("Chipset");
 			if (obj.containsKey("FormFactor"))
 				this.formFactor = (String) obj.get("FormFactor");
-			if (obj.containsKey("Socket"))
-				this.cpuSocket = (String) obj.get("Socket");
+			if (obj.containsKey("CPUSocket"))
+				this.cpuSocket = (String) obj.get("CPUSocket");
 			if (obj.containsKey(Str.slot)) {
 				JSONArray values = (JSONArray) obj.get(Str.slot);
 				for (Object value : values) {
@@ -195,7 +195,7 @@ class Mainboard extends Product {
 					break;
 				case "Socket":
 					if (this.cpuSocket != null)
-						obj.put("Socket", this.cpuSocket);
+						obj.put("CPUSocket", this.cpuSocket);
 					break;
 				case "Slot":
 					if (slots.size() != 0) {
