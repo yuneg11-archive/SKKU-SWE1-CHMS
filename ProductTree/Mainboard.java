@@ -193,7 +193,7 @@ class Mainboard extends Product {
 					if (this.formFactor != null)
 						obj.put("FormFactor", this.formFactor);
 					break;
-				case "Socket":
+				case "CPUSocket":
 					if (this.cpuSocket != null)
 						obj.put("CPUSocket", this.cpuSocket);
 					break;
