@@ -2,8 +2,6 @@ import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
 
-import java.util.Scanner;
-
 class CPU extends Processor {
 	// Variable
 	private ImbeddedGraphic imbeddedGraphic;

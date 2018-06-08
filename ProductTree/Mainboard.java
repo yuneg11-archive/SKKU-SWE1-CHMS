@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-
 import JSON.JSONObject;
 import JSON.JSONArray;
 import JSON.parser.JSONParser;
