@@ -15,8 +15,7 @@ public class CHMS {
             case 4: dm.search(); break;
             case 5: dm.sort(); break;
             case 6: dm.list(); break;
-            case 7:// Cost Estimation
-                break;
+            case 7: dm.costCalc(); break;
             case 8: exit = true; break;
             }
         } while(!exit);

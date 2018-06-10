@@ -84,7 +84,7 @@ public class UI {
         System.out.println(title("MAIN MENU"));
         System.out.println(subtitle("Functions"));
         System.out.println(subcontent("1. Insert         2. Modify         3. Delete        4. Search"));
-        System.out.println(subcontent("5. Sort           6. List           7. Cost Estimation"));
+        System.out.println(subcontent("5. Sort           6. List           7. Cost Calculation"));
         System.out.println(subcontent("8. Exit"));
         System.out.println(closeBox);
         return inputRange(1, 8);
@@ -134,6 +134,12 @@ public class UI {
         System.out.println(subcontent("21. TDP          22. Write Speed"));
         System.out.println(closeBox);
         return inputRange(1, 22);
+    }
+
+    static void printCostCalc() {
+        System.out.println(title("Cost Calculation"));
+        System.out.println(subtitle("Enter product names to calculate cost"));
+        System.out.println(closeBox);
     }
 
     static int inputRange(int lowerBound, int upperBound) {

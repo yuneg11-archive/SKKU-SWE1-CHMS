@@ -359,6 +359,38 @@ class DataManagement {
 		printProduct(require);
 	}
 
+	void costCalc() {
+		ArrayList<Integer> selectedProducts = new ArrayList<Integer>();
+		boolean cont;
+
+		UI.printCostCalc();
+		do {
+			String name = UI.inputLine("#" + (selectedProducts.size()+1) + " Product's name");
+			JSONObject obj = new JSONObject();
+			obj.put("Mode", "Match");
+			obj.put("Attribute", "Name");
+			obj.put("Value", name);
+			ArrayList<Integer> searched = searchProduct(obj.toJSONString());
+			if(searched.size() == 0) {
+				System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+			} else {
+				printProduct(searched);
+				boolean select = UI.inputYesNo("Add \"" + name + "\" to calculation list? (Y/N):");
+				if(select) {
+					selectedProducts.add(searched.get(0));
+				}
+			}
+			cont = UI.inputYesNo("Add more products? (Y/N)");
+		} while(cont);
+		printProduct(selectedProducts);
+
+		Long sum = 0L;
+		for(Integer idx : selectedProducts) {
+			sum += products.get(idx).product.price * products.get(idx).num;
+		}
+		System.out.println(UI.prompt("Total price: " + sum.toString()));
+	}
+
 	ArrayList<Integer> sortProduct(ArrayList<Integer> lists, String attributeName, String attributeType, int sortDirc) throws Exception {
 		if(sortDirc == 1) { // Asc
 			sortDirc =  1;
