@@ -515,30 +515,92 @@ class DataManagement {
 					System.out.println(UI.subcontent("CPU Socket: " + cpuValue));
 					System.out.println(UI.subcontent("Mainboard Socket: " + mainboardValue));
 				}
+				System.out.println(UI.content(""));
 			} catch(Exception ex) {}
 		}
 
-		//Incomplete
 		if(graphicCardIndex != -1 && mainboardIndex != -1) {
 			try {
-				String graphicCardAtt = products.get(cpuIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
-				String cpuValue = (String)((JSONObject)(new JSONParser().parse(graphicCardAtt))).get(Str.cpuSocket);
-				String mainboardAtt = products.get(mainboardIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
-				String mainboardValue = (String)((JSONObject)(new JSONParser().parse(mainboardAtt))).get(Str.cpuSocket);
-				if(cpuValue.equals(mainboardValue)) {
-					System.out.println(UI.subtitle("CPU <-> Mainboard : Compatible"));
-					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
-					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
-					System.out.println(UI.subcontent("Socket: " + cpuValue));
-				} else {
-					System.out.println(UI.subtitle("CPU <-> Mainboard : Incompatible"));
-					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
-					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
-					System.out.println(UI.subcontent("CPU Socket: " + cpuValue));
-					System.out.println(UI.subcontent("Mainboard Socket: " + mainboardValue));
+				String graphicCardAtt = products.get(graphicCardIndex).product.getAttribute("{\"Keys\":[\""+Str.slot+"\"]}");
+				String graphicCardValue = (String)((JSONObject)(new JSONParser().parse(graphicCardAtt))).get(Str.slot);
+				String mainboardAtt = products.get(mainboardIndex).product.getAttribute("{\"Keys\":[\""+Str.slot+"\"]}");
+				JSONArray mainboardValue = (JSONArray)((JSONObject)(new JSONParser().parse(mainboardAtt))).get(Str.slot);
+				boolean portExist = false;
+				for(Object port : mainboardValue) {
+					if(((String)((JSONObject)port).get("Name")).equals(graphicCardValue)) {
+						portExist = true;
+					}
 				}
+				if(portExist) {
+					System.out.println(UI.subtitle("Graphic Card <-> Mainboard : Compatible"));
+					System.out.println(UI.subcontent("Graphic Card name: " + products.get(graphicCardIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Slot: " + graphicCardValue));
+				} else {
+					System.out.println(UI.subtitle("Graphic Card <-> Mainboard : Incompatible"));
+					System.out.println(UI.subcontent("Graphic Card name: " + products.get(graphicCardIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Graphic Card Slot: " + graphicCardValue));
+				}
+				System.out.println(UI.content(""));
 			} catch(Exception ex) {}
 		}
+
+		if(powerSupplyIndex != -1) {
+			try {
+				String cpuAtt = "";
+				Long cpuValue = 0L;
+				String graphicCardAtt = "";
+				Long graphicCardValue = 0L;
+				if(cpuIndex != -1) {
+					cpuAtt = products.get(cpuIndex).product.getAttribute("{\"Keys\":[\""+Str.tdp+"\"]}");
+					cpuValue = (Long)((JSONObject)(new JSONParser().parse(cpuAtt))).get(Str.tdp);
+				}
+				if(graphicCardIndex != -1) {
+					graphicCardAtt = products.get(graphicCardIndex).product.getAttribute("{\"Keys\":[\""+Str.tdp+"\"]}");
+					graphicCardValue = (Long)((JSONObject)(new JSONParser().parse(graphicCardAtt))).get(Str.tdp);
+				}
+				String powerSupplyAtt = products.get(powerSupplyIndex).product.getAttribute("{\"Keys\":[\""+Str.ratedOutput+"\"]}");
+				Long powerSupplyValue = (Long)((JSONObject)(new JSONParser().parse(powerSupplyAtt))).get(Str.ratedOutput);
+
+				if(cpuValue + graphicCardValue <= powerSupplyValue) {
+					System.out.println(UI.subtitle("CPU, Graphic Card <-> Power Supply : Compatible"));
+				} else {
+					System.out.println(UI.subtitle("CPU, Graphic Card <-> Power Supply : Incompatible"));
+				}
+				if(cpuIndex != -1)
+					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
+				if(graphicCardIndex != -1)
+					System.out.println(UI.subcontent("Graphic Card name: " + products.get(graphicCardIndex).product.name));
+				System.out.println(UI.subcontent("Power Supply name: " + products.get(powerSupplyIndex).product.name));
+				System.out.println(UI.subcontent("Total TDP: " + (cpuValue + graphicCardValue)));
+				System.out.println(UI.subcontent("Power Supply Output: " + powerSupplyValue));
+				System.out.println(UI.content(""));
+			} catch(Exception ex) {}
+		}
+
+		if(mainboardIndex != -1 && caseIndex != -1) {
+			try {
+				String mainboardAtt = products.get(mainboardIndex).product.getAttribute("{\"Keys\":[\""+Str.formFactor+"\"]}");
+				String mainboardValue = (String)((JSONObject)(new JSONParser().parse(mainboardAtt))).get(Str.formFactor);
+				String caseAtt = products.get(caseIndex).product.getAttribute("{\"Keys\":[\""+Str.formFactor+"\"]}");
+				String caseValue = (String)((JSONObject)(new JSONParser().parse(caseAtt))).get(Str.formFactor);
+				if(caseValue.equals(mainboardValue)) {
+					System.out.println(UI.subtitle("Mainboard <-> Case : Compatible"));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Case name: " + products.get(caseIndex).product.name));
+					System.out.println(UI.subcontent("Form factor: " + caseValue));
+				} else {
+					System.out.println(UI.subtitle("Mainboard <-> Case : Warning"));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Case name: " + products.get(caseIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard Form factor: " + mainboardValue));
+					System.out.println(UI.subcontent("Case Form factor: " + caseValue));
+				}
+				System.out.println(UI.content(""));
+			} catch(Exception ex) {}
+		}
+		System.out.println(UI.closeBox);
 	}
 
 	ArrayList<Integer> sortProduct(ArrayList<Integer> lists, String attributeName, String attributeType, int sortDirc) throws Exception {

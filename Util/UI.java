@@ -93,9 +93,9 @@ public class UI {
     static int printInsert() {
         System.out.println(title("Insert"));
         System.out.println(subtitle("Product Type"));
-        System.out.println(subcontent(" 1. CPU           2. Mainboard      3. Memory          4. Graphic Card"));
-        System.out.println(subcontent(" 5. Power Supply  6. SSD            7. HDD             8. Case"));
-        System.out.println(subcontent(" 9. Expansion Card"));
+        System.out.println(subcontent("1. CPU           2. Mainboard      3. Memory        4. Graphic Card"));
+        System.out.println(subcontent("5. Power Supply  6. SSD            7. HDD           8. Case"));
+        System.out.println(subcontent("9. Expansion Card"));
         System.out.println(closeBox);
         return inputRange(1, 9);
     }
