@@ -321,9 +321,9 @@ class DataManagement {
 			}
 			if(rangeMode == 2 || rangeMode == 3) {
 				if(attributeType.equals("Long")) {
-					upperBound = UI.inputLong("Lower bound");
+					lowerBound = UI.inputLong("Lower bound");
 				} else if(attributeType.equals("Double")) {
-					upperBound = UI.inputDouble("Lower bound");
+					lowerBound = UI.inputDouble("Lower bound");
 				}
 			}
 			obj.put("LowerBound", lowerBound);
