@@ -20,7 +20,7 @@ public class Str {
     public static String writeSpeed = "WriteSpeed";
     public static String diskSize = "DiskSize";
     public static String rpm = "RPM";
-    public static String systemMemoryAlloc = "SystemMemoryAllocation";
+    public static String systemMemoryAlloc = "SystemMemoryAlloc";
     public static String errorCheck = "ErrorCheck";
     public static String standard = "Standard";
     public static String ratedOutput = "RatedOutput";

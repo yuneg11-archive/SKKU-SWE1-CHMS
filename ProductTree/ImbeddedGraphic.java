@@ -68,8 +68,8 @@ class ImbeddedGraphic extends Graphic {
 				this.chipset = (String) obj.get(Str.chipset);
 			if (obj.containsKey("Fabrication"))
 				this.fabrication = (Long) obj.get("Fabrication");
-			if (obj.containsKey("SystemMemoryAllocation"))
-				this.systemMemoryAlloc = (Long) obj.get("SystemMemoryAllocation");
+			if (obj.containsKey(Str.systemMemoryAlloc))
+				this.systemMemoryAlloc = (Long) obj.get(Str.systemMemoryAlloc);
 		} catch (Exception exc) {
 			System.out.println("Unexpected error occurred");
 		}
@@ -95,20 +95,20 @@ class ImbeddedGraphic extends Graphic {
 						obj.put("CoreNumber", this.coreNumber);
 					break;
 				case "ClockRate":
-					if (this.coreNumber != null)
-						obj.put(Str.clockRate, this.coreNumber);
+					if (this.clockRate != null)
+						obj.put(Str.clockRate, this.clockRate);
 					break;
 				case "Fabrication":
 					if (this.fabrication != null)
 						obj.put("Fabrication", this.fabrication);
 					break;
 				case "Chipset":
-					if (this.tdp != null)
-						obj.put(Str.chipset, this.tdp);
+					if (this.chipset != null)
+						obj.put(Str.chipset, this.chipset);
 					break;
-				case "SystemMemoryAllocation":
+				case "SystemMemoryAlloc":
 					if (this.systemMemoryAlloc != null)
-						obj.put("SystemMemoryAllocation", this.systemMemoryAlloc);
+						obj.put(Str.systemMemoryAlloc, this.systemMemoryAlloc);
 					break;
 				}
 			}

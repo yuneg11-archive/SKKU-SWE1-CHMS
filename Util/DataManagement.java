@@ -180,11 +180,24 @@ class DataManagement {
 		//s.close();
 	}
 
+	Integer searchProductName(String name) {
+		JSONObject obj = new JSONObject();
+		obj.put("Mode", "Match");
+		obj.put("Attribute", "Name");
+		obj.put("Value", name);
+		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
+		if(searched.size() == 0) {
+			return -1;
+		} else {
+			return searched.get(0);
+		}
+	}
+
 	ArrayList<Integer> searchProduct(String conditionStr) {
 		/* conditions : {"Mode":"Exist", "Attribute":"Price"} */
 		/* conditions : {"Mode":"Match", "Attribute":"Name", "Value":"i5"} */
 		/* conditions : {"Mode":"Range", "Attribute":"Price", "LowerBound":10000, "UpperBound":50000}]} */
-		ArrayList<Integer> productIndex = new ArrayList<>();
+		ArrayList<Integer> productIndex = new ArrayList<Integer>();
 		for(int i = 0; i < this.products.size(); i++) {
 			productIndex.add(i);
 		}
@@ -198,6 +211,9 @@ class DataManagement {
 				String attribute = products.get(productIndex.get(i)).product.getAttribute(require.toJSONString());
 				JSONObject result = (JSONObject)(new JSONParser().parse(attribute));
 				Object value = result.get((String)condition.get("Attribute"));
+				if(((String)condition.get("Attribute")).equals("Quantity")) {
+					value = products.get(productIndex.get(i)).num;
+				}
 
 				if(value == null) { // Attribute doesn't exist in target product
 					productIndex.remove(productIndex.get(i));
@@ -226,18 +242,14 @@ class DataManagement {
 	void delete() {
 		UI.printDelete();
 		String name = UI.inputLine("Name");
-		JSONObject obj = new JSONObject();
-		obj.put("Mode", "Match");
-		obj.put("Attribute", "Name");
-		obj.put("Value", name);
-		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
-		if(searched.size() == 0) {
+		Integer searchedIndex = searchProductName(name);
+		if(searchedIndex == -1) {
 			System.out.println(" Product \"" + name + "\" doesn't exist.");
 		} else {
-			printProduct((int)searched.get(0));
+			printProduct(searchedIndex);
 			boolean answer = UI.inputYesNo("Delete \"" + name + "\"? (Y/N)");
 			if(answer) {
-				products.remove((int)searched.get(0));
+				products.remove((int)searchedIndex);
 				System.out.println(" Product \"" + name + "\" is deleted.");
 			} else {
 				System.out.println(" Delete canceled.");
@@ -248,24 +260,20 @@ class DataManagement {
 	void modify() {
 		UI.printModify();
 		String name = UI.inputLine("Name");
-		JSONObject obj = new JSONObject();
-		obj.put("Mode", "Match");
-		obj.put("Attribute", "Name");
-		obj.put("Value", name);
-		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
-		if(searched.size() == 0) {
+		Integer searchedIndex = searchProductName(name);
+		if(searchedIndex == -1) {
 			System.out.println("Product \"" + name + "\" doesn't exist.");
 		} else {
-			printProduct((int)searched.get(0));
+			printProduct(searchedIndex);
 			boolean answer = UI.inputYesNo("Modify \"" + name + "\"? (Y/N)");
 			if(answer) {
 				JSONObject exclude = new JSONObject();
 				JSONArray keyArray = new JSONArray();
 				keyArray.add(Str.name);
 				exclude.put("ExcludeKey", keyArray);
-				products.get((int)searched.get(0)).product.insert(exclude.toJSONString());
-				products.get((int)searched.get(0)).num = UI.inputLong("Quantity");
-				printProduct((int)searched.get(0));
+				products.get((int)searchedIndex).product.insert(exclude.toJSONString());
+				products.get((int)searchedIndex).num = UI.inputLong("Quantity");
+				printProduct(searchedIndex);
 				System.out.println(" Product \"" + name + "\" is modified.");
 			} else {
 				System.out.println(" Modify canceled.");
@@ -335,13 +343,6 @@ class DataManagement {
 		obj.put("Mode", "Exist");
 		obj.put("Attribute", attributeName);
 		ArrayList<Integer> searched = searchProduct(obj.toJSONString());
-		// Quantity Handler
-		if(attributeName.equals(Str.quantity)) {
-			searched = new ArrayList<Integer>();
-			for(int i = 0; i < products.size(); i++) {
-				searched.add(i);
-			}
-		}
 
 		int sortDirc = UI.inputRange("Order (1.Ascending, 2.Descending)", 1, 2);
 		ArrayList<Integer> sorted = new ArrayList<Integer>();
@@ -366,18 +367,14 @@ class DataManagement {
 		UI.printCostCalc();
 		do {
 			String name = UI.inputLine("#" + (selectedProducts.size()+1) + " Product's name");
-			JSONObject obj = new JSONObject();
-			obj.put("Mode", "Match");
-			obj.put("Attribute", "Name");
-			obj.put("Value", name);
-			ArrayList<Integer> searched = searchProduct(obj.toJSONString());
-			if(searched.size() == 0) {
+			Integer selectedIndex = searchProductName(name);
+			if(selectedIndex == -1) {
 				System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
 			} else {
-				printProduct(searched);
-				boolean select = UI.inputYesNo("Add \"" + name + "\" to calculation list? (Y/N):");
+				printProduct(selectedIndex);
+				boolean select = UI.inputYesNo("Add \"" + name + "\" to calculation list? (Y/N)");
 				if(select) {
-					selectedProducts.add(searched.get(0));
+					selectedProducts.add(selectedIndex);
 				}
 			}
 			cont = UI.inputYesNo("Add more products? (Y/N)");
@@ -389,6 +386,159 @@ class DataManagement {
 			sum += products.get(idx).product.price * products.get(idx).num;
 		}
 		System.out.println(UI.prompt("Total price: " + sum.toString()));
+	}
+
+	void compatTest() {
+		UI.printCompatTest();
+		Integer mainboardIndex = -1;
+		Integer cpuIndex = -1;
+		Integer graphicCardIndex = -1;
+		Integer powerSupplyIndex = -1;
+		Integer caseIndex = -1;
+
+		if(UI.inputYesNo("Add Mainboard? (Y/N)")) {
+			System.out.println(UI.insertTitle("Mainboard"));
+			do{
+				String name = UI.inputLine("Mainboard name");
+				Integer searchedIndex = searchProductName(name);
+				if(searchedIndex == -1) {
+					System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+				} else if(!(products.get(searchedIndex).product instanceof Mainboard)) {
+					System.out.println(UI.prompt("Product \"" + name + "\" is not a mainboard."));
+				} else {
+					printProduct(searchedIndex);
+					if(UI.inputYesNo("Add \"" + name + "\" to compatibility check list? (Y/N)")) {
+						mainboardIndex = searchedIndex;
+						break;
+					}
+				}
+			} while(UI.inputYesNo("Re-enter name? (Y/N)"));
+			System.out.println(UI.inputEndLine);
+		}
+
+		if(UI.inputYesNo("Add CPU? (Y/N)")) {
+			System.out.println(UI.insertTitle("CPU"));
+			do{
+				String name = UI.inputLine("CPU name");
+				Integer searchedIndex = searchProductName(name);
+				if(searchedIndex == -1) {
+					System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+				} else if(!(products.get(searchedIndex).product instanceof CPU)) {
+					System.out.println(UI.prompt("Product \"" + name + "\" is not a CPU."));
+				} else {
+					printProduct(searchedIndex);
+					if(UI.inputYesNo("Add \"" + name + "\" to compatibility check list? (Y/N)")) {
+						cpuIndex = searchedIndex;
+						break;
+					}
+				}
+			} while(UI.inputYesNo("Re-enter name? (Y/N)"));
+			System.out.println(UI.inputEndLine);
+		}
+		
+		if(UI.inputYesNo("Add Graphic card? (Y/N)")) {
+			System.out.println(UI.insertTitle("Graphic card"));
+			do{
+				String name = UI.inputLine("Graphic card name");
+				Integer searchedIndex = searchProductName(name);
+				if(searchedIndex == -1) {
+					System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+				} else if(!(products.get(searchedIndex).product instanceof GraphicCard)) {
+					System.out.println(UI.prompt("Product \"" + name + "\" is not a Graphic card."));
+				} else {
+					printProduct(searchedIndex);
+					if(UI.inputYesNo("Add \"" + name + "\" to compatibility check list? (Y/N)")) {
+						graphicCardIndex = searchedIndex;
+						break;
+					}
+				}
+			} while(UI.inputYesNo("Re-enter name? (Y/N)"));
+			System.out.println(UI.inputEndLine);
+		}
+
+		if(UI.inputYesNo("Add Power supply? (Y/N)")) {
+			System.out.println(UI.insertTitle("Power supply"));
+			do{
+				String name = UI.inputLine("Power supply name");
+				Integer searchedIndex = searchProductName(name);
+				if(searchedIndex == -1) {
+					System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+				} else if(!(products.get(searchedIndex).product instanceof PowerSupply)) {
+					System.out.println(UI.prompt("Product \"" + name + "\" is not a Power supply."));
+				} else {
+					printProduct(searchedIndex);
+					if(UI.inputYesNo("Add \"" + name + "\" to compatibility check list? (Y/N)")) {
+						powerSupplyIndex = searchedIndex;
+						break;
+					}
+				}
+			} while(UI.inputYesNo("Re-enter name? (Y/N)"));
+			System.out.println(UI.inputEndLine);
+		}
+
+		if(UI.inputYesNo("Add Case? (Y/N)")) {
+			System.out.println(UI.insertTitle("Case"));
+			do{
+				String name = UI.inputLine("Case name");
+				Integer searchedIndex = searchProductName(name);
+				if(searchedIndex == -1) {
+					System.out.println(UI.prompt("Product \"" + name + "\" doesn't exist."));
+				} else if(!(products.get(searchedIndex).product instanceof Case)) {
+					System.out.println(UI.prompt("Product \"" + name + "\" is not a Case."));
+				} else {
+					printProduct(searchedIndex);
+					if(UI.inputYesNo("Add \"" + name + "\" to compatibility check list? (Y/N)")) {
+						caseIndex = searchedIndex;
+						break;
+					}
+				}
+			} while(UI.inputYesNo("Re-enter name? (Y/N)"));
+			System.out.println(UI.inputEndLine);
+		}
+
+		System.out.println(UI.title("Compatibility Test Result"));
+		if(cpuIndex != -1 && mainboardIndex != -1) {
+			try {
+				String cpuAtt = products.get(cpuIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
+				String cpuValue = (String)((JSONObject)(new JSONParser().parse(cpuAtt))).get(Str.cpuSocket);
+				String mainboardAtt = products.get(mainboardIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
+				String mainboardValue = (String)((JSONObject)(new JSONParser().parse(mainboardAtt))).get(Str.cpuSocket);
+				if(cpuValue.equals(mainboardValue)) {
+					System.out.println(UI.subtitle("CPU <-> Mainboard : Compatible"));
+					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Socket: " + cpuValue));
+				} else {
+					System.out.println(UI.subtitle("CPU <-> Mainboard : Incompatible"));
+					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("CPU Socket: " + cpuValue));
+					System.out.println(UI.subcontent("Mainboard Socket: " + mainboardValue));
+				}
+			} catch(Exception ex) {}
+		}
+
+		//Incomplete
+		if(graphicCardIndex != -1 && mainboardIndex != -1) {
+			try {
+				String graphicCardAtt = products.get(cpuIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
+				String cpuValue = (String)((JSONObject)(new JSONParser().parse(graphicCardAtt))).get(Str.cpuSocket);
+				String mainboardAtt = products.get(mainboardIndex).product.getAttribute("{\"Keys\":[\""+Str.cpuSocket+"\"]}");
+				String mainboardValue = (String)((JSONObject)(new JSONParser().parse(mainboardAtt))).get(Str.cpuSocket);
+				if(cpuValue.equals(mainboardValue)) {
+					System.out.println(UI.subtitle("CPU <-> Mainboard : Compatible"));
+					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("Socket: " + cpuValue));
+				} else {
+					System.out.println(UI.subtitle("CPU <-> Mainboard : Incompatible"));
+					System.out.println(UI.subcontent("CPU name: " + products.get(cpuIndex).product.name));
+					System.out.println(UI.subcontent("Mainboard name: " + products.get(mainboardIndex).product.name));
+					System.out.println(UI.subcontent("CPU Socket: " + cpuValue));
+					System.out.println(UI.subcontent("Mainboard Socket: " + mainboardValue));
+				}
+			} catch(Exception ex) {}
+		}
 	}
 
 	ArrayList<Integer> sortProduct(ArrayList<Integer> lists, String attributeName, String attributeType, int sortDirc) throws Exception {

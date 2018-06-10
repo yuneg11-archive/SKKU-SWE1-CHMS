@@ -85,9 +85,9 @@ public class UI {
         System.out.println(subtitle("Functions"));
         System.out.println(subcontent("1. Insert         2. Modify         3. Delete        4. Search"));
         System.out.println(subcontent("5. Sort           6. List           7. Cost Calculation"));
-        System.out.println(subcontent("8. Exit"));
+        System.out.println(subcontent("8. Compatibility Test               9. Exit"));
         System.out.println(closeBox);
-        return inputRange(1, 8);
+        return inputRange(1, 9);
     }
 
     static int printInsert() {
@@ -139,6 +139,12 @@ public class UI {
     static void printCostCalc() {
         System.out.println(title("Cost Calculation"));
         System.out.println(subtitle("Enter product names to calculate cost"));
+        System.out.println(closeBox);
+    }
+
+    static void printCompatTest() {
+        System.out.println(title("Compatibility Test"));
+        System.out.println(subtitle("Enter product names to test compatibility"));
         System.out.println(closeBox);
     }
 

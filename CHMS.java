@@ -16,12 +16,13 @@ public class CHMS {
             case 5: dm.sort(); break;
             case 6: dm.list(); break;
             case 7: dm.costCalc(); break;
-            case 8: exit = true; break;
+            case 8: dm.compatTest(); break;
+            case 9: exit = true; break;
             }
+            fm.saveDatabase(dm.getProducts());
+            System.out.println(UI.prompt("Database Saved."));
         } while(!exit);
-
-        fm.saveDatabase(dm.getProducts());
-        System.out.println(UI.prompt("Database Saved."));
+                
         System.out.println(UI.prompt("Program over."));
     }
 }
