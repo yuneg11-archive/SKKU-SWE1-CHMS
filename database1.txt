@@ -1,5 +1,0 @@
-{"Price":550000,"CoreNumber":6,"ProductType":"CPU","Manufacturer":"Intel","ClockRate":3.5,"Quantity":1,"ImbeddedGraphic":{"ProductType":"ImbeddedGraphic","SystemMemoryAllocation":64,"Quantity":1,"Name":"HD5500"},"Name":"i5-8550U"}
-{"Port":[{"Number":3,"Name":"USB 3.0"},{"Number":4,"Name":"HDMI"}],"ProductType":"GraphicCard","Quantity":1}
-{"Port":[{"Number":6,"Name":"SATA3"},{"Number":2,"Name":"M.2"}],"ProductType":"Mainboard","Quantity":1,"Slot":[{"Number":5,"Name":"PCI-Express"}]}
-{"Chipset":"M78","FormFactor":"ITX","Price":105000,"Port":[{"Number":3,"Name":"USB3.0"},{"Number":1,"Name":"HDMI"}],"ProductType":"Mainboard","Manufacturer":"ASROCK","Quantity":1,"Slot":[{"Number":4,"Name":"PCI-Express"},{"Number":3,"Name":"M.2"},{"Number":6,"Name":"SATA3"}],"Name":"IdontKwno"}
-{"Price":70000,"Capacity":8,"ProductType":"Memory","Manufacturer":"Samsung","ClockRate":4500,"ErrorCheck":true,"Quantity":2,"Standard":"DDR3","Name":"Molamola"}
