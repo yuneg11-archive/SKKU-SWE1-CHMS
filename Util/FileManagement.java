@@ -43,7 +43,7 @@ class FileManagement {
                 System.out.println("Unexpected error occurred");
             }
             System.out.println(UI.prompt("Database not exist. Opening new database."));
-            return null;
+            return new ArrayList<ProductLongPair>();
         } catch(Exception ex) {
             System.out.println("Unexpected error occurred");
         }
@@ -62,7 +62,7 @@ class FileManagement {
                 bw.newLine();
             }
             bw.close();
-        } catch(IOException ex) {
+        } catch(Exception ex) {
             System.out.println("Unexpected error occurred");
         }
     }
